@@ -8,23 +8,38 @@
 body {
   font-family: Arial, sans-serif;
   background-color: #f8f9fa;
+  padding-top: 60px;
 }
 
 /* Header with Navigation and Search Bar */
 header {
+  position: absolute; /* Default position */
+  top: 0;
+  left: 0;
+  width: 100%;
   background-color: #333;
   color: #fff;
-  padding: 15px;
+  padding: 15px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  z-index: 1000;
+  transition: all 0.3s ease-in-out; /* Smooth transition */
+}
+
+header.fixed {
+  position: fixed; /* Fixed position when sticky */
+  top: 0; /* Stay at the top */
+  background-color: rgba(51, 51, 51, 0.9); /* Semi-transparent when sticky */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for sticky header */
+  padding: 10px 20px; /* Adjust padding when sticky */
 }
 
 header h1 {
   font-size: 28px;
 }
 
-/* New container for navigation and search bar */
+/* Navigation and Search Bar Container */
 .nav-search-container {
   display: flex;
   align-items: center;
@@ -50,7 +65,7 @@ nav ul li a:hover {
   border-radius: 4px;
 }
 
-/* Search bar styling */
+/* Search Bar Styling */
 .search-bar {
   display: flex;
   align-items: center;
@@ -80,6 +95,12 @@ nav ul li a:hover {
   background-color: #666;
 }
 
+@media (max-width: 768px) {
+  header.fixed {
+    padding: 8px 15px;
+  }
+}
+
 /* Main Content */
 .container {
   max-width: 1500px;
@@ -91,7 +112,6 @@ nav ul li a:hover {
 .slider-container {
   position: relative;
   width: 100vw;
-
   max-width: 1300px;
   margin: 0;
   margin-top: 30px;
@@ -109,7 +129,7 @@ nav ul li a:hover {
 
 .product-image-box {
   min-width: 100%;
-  height: 450px;
+  height: 500px;
 
   position: relative;
   display: flex;
@@ -126,43 +146,84 @@ nav ul li a:hover {
 }
 
 /* Title, Description, and Button Overlay */
+/* Adjust Slider Overlay */
 .slider-overlay {
   position: absolute;
-  bottom: 20px;
-  justify-items: center;
+  top: 50%; /* Center vertically */
+  left: 20px; /* Align to the left with spacing */
+  transform: translateY(-50%); /* Ensure proper vertical centering */
   color: #fff;
-  background-color: #000000a8;
-  padding: 10px;
-  border-radius: 5px;
-  width: 60%;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  padding: 20px;
+  border-radius: 8px;
+  width: 30%;
+  height: 80%;
   display: none;
-  margin-bottom: 40px;
+  flex-direction: column; /* Stack content */
+  gap: 10px; /* Add spacing between elements */
 }
 
 .slider-overlay h3 {
-  margin-bottom: 5px;
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .slider-overlay p {
-  margin-bottom: 10px;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.4;
 }
 
 .slider-overlay button {
-  padding: 8px 16px;
-  background-color: #007bff;
+  align-self: center;
+  padding: 14px 128px;
+  background: #333;
   color: #fff;
+  font-size: 16px;
+  font-weight: bold;
   border: none;
-  border-radius: 4px;
+  border-radius: 25px;
   cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 
 .slider-overlay button:hover {
-  background-color: #0056b3;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+  background: #333;
 }
 
-/* Show overlay when the product image is hovered */
+.slider-overlay button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(
+    135deg,
+    #004080,
+    #002960
+  ); /* Even darker gradient */
+}
+
+/* Ensure the overlay is shown only when hovered */
 .product-image-box:hover .slider-overlay {
-  display: block;
+  display: flex; /* Ensure visibility when hovered */
+}
+
+@media (max-width: 768px) {
+  .slider-overlay {
+    width: 60%; /* Increase width for smaller screens */
+    left: 10px; /* Adjust spacing */
+    padding: 15px;
+  }
+
+  .slider-overlay h3 {
+    font-size: 20px;
+  }
+
+  .slider-overlay p {
+    font-size: 14px;
+  }
 }
 
 /* Slider Controls */
@@ -197,17 +258,15 @@ nav ul li a:hover {
 
 /* Product Card */
 .product-card {
-  background-color: #fff;
+  background: #fff; /* Gradient from blue to purple */
   border: 1px solid #ddd;
   margin-top: 30px;
   border-radius: 5px;
   width: 23%;
-  /* Adjusted for four products in a row */
   padding: 15px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  /* Add transition for smooth effect */
 }
 
 /* Hover Effect */
@@ -233,7 +292,7 @@ nav ul li a:hover {
 }
 
 .product-card p {
-  color: #777;
+  color: #000000;
   font-size: 14px;
   margin: 10px 0;
 }
@@ -445,17 +504,16 @@ nav ul li a:hover {
 footer {
   background-color: #333;
   color: #fff;
+  min-height: 180px; /* Ensures the footer has a minimum height but grows with content */
   padding: 20px;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 80px;
+  justify-content: space-between;
+  /* gap: 60px; */
   flex-wrap: wrap;
   text-align: center;
+
   width: 100%;
-  bottom: 0;
   transition: all 0.3s ease;
-  z-index: 10;
 }
 
 .footer-section {
@@ -466,15 +524,15 @@ footer {
 }
 
 .footer-section h3 {
-  font-size: 18px;
+  font-size: 25px;
   margin-bottom: 10px;
-  color: #ddd;
+  color: #fff;
   text-align: center;
 }
 
 .footer-section p,
 .footer-section a {
-  font-size: 14px;
+  font-size: 18px;
   color: #aaa;
   text-decoration: none;
 }
@@ -500,10 +558,26 @@ footer {
   color: #fff;
 }
 
+/* New styling for the text-based logo column */
+.footer-section.logo-column {
+  text-align: left; /* Align logo text to the left */
+  flex: 1;
+  max-width: 300px;
+  padding-left: 50px;
+  padding-top: 10px;
+}
+
+.footer-logo {
+  font-size: 50px; /* Adjust font size to fit your design */
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
 footer.fixed {
-  position: fixed;
-  bottom: 0;
-  left: 0;
+  position: static; /* Remove the fixed positioning */
+  bottom: auto;
+  left: auto;
   z-index: 10;
 }
 
@@ -518,5 +592,9 @@ footer.fixed {
 
   .footer-section {
     max-width: 100%;
+  }
+
+  .footer-section.logo-column {
+    text-align: center; /* Center logo text on smaller screens */
   }
 }
