@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart - Your Store</title>
+    <link rel="stylesheet" href="cart.css" />
+    <!-- Your CSS file -->
+  </head>
+  <body>
+    <!-- Header Section -->
+    <header>
+      <h1>Norra</h1>
+      <div class="nav-search-container">
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">Shop</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li>
+              <a href="cart.html"> Cart <span id="cart-count">(0)</span> </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="search-bar">
+          <input type="text" placeholder="Search products..." />
+          <button>Search</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Cart Section (Initially Empty) -->
+    <section class="cart">
+      <div class="container">
+        <h1>Your Cart</h1>
+
+        <!-- Cart Content (Grid Layout) -->
+        <div class="cart-content">
+          <!-- Cart Items List (70%) -->
+          <div class="cart-items">
+            <div class="cart-item" data-id="1">
+              <img
+                src="images/Product+Photography.jpg"
+                alt="Nike Free RN Flyknit"
+                class="cart-item-image"
+              />
+              <div class="cart-item-info">
+                <h3>Nike Free RN Flyknit</h3>
+                <p>Price: $19.99</p>
+
+                <!-- Quantity Controls -->
+                <div class="quantity-control">
+                  <button class="decrease-quantity">-</button>
+                  <span class="quantity" data-id="1">1</span>
+                  <button class="increase-quantity">+</button>
+                </div>
+                <button class="remove-from-cart" data-id="1">Remove</button>
+              </div>
+            </div>
+            <div class="cart-item" data-id="1">
+              <img
+                src="images/Product+Photography.jpg"
+                alt="Nike Free RN Flyknit"
+                class="cart-item-image"
+              />
+              <div class="cart-item-info">
+                <h3>Nike Free RN Flyknit</h3>
+                <p>Price: $19.99</p>
+
+                <!-- Quantity Controls -->
+                <div class="quantity-control">
+                  <button class="decrease-quantity">-</button>
+                  <span class="quantity" data-id="1">1</span>
+                  <button class="increase-quantity">+</button>
+                </div>
+                <button class="remove-from-cart" data-id="1">Remove</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cart Summary Details (30%) -->
+          <div class="cart-summary-details">
+            <h2>Summary</h2>
+            <p>Product Amount: <span id="product-amount">$19.99</span></p>
+            <p>Discount Amount: <span id="discount-amount">$0.00</span></p>
+            <h3>
+              <strong
+                >Total Amount: <span id="total-amount">$19.99</span></strong
+              >
+            </h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+      <div class="footer-section logo-column">
+        <h1 class="footer-logo">Norra</h1>
+        <p>&copy; 2024 Norra E-commerce</p>
+      </div>
+      <div class="footer-section">
+        <h3>Address</h3>
+        <p>Norra E-commerce</p>
+        <p>123 Commerce St.</p>
+        <p>Cityville, ST 12345</p>
+      </div>
+      <div class="footer-section">
+        <h3>Contact</h3>
+        <p>Email: support@norra.com</p>
+        <p>Phone: +1 234 567 890</p>
+        <p>Working Hours: 9 AM - 6 PM</p>
+      </div>
+      <div class="footer-section">
+        <h3>Tags</h3>
+        <a href="#">Shoes</a><br />
+        <a href="#">Accessories</a><br />
+        <a href="#">Apparel</a><br />
+        <a href="#">New Arrivals</a><br />
+        <a href="#">Sale</a>
+      </div>
+    </footer>
+
+    <script src="cart.js"></script>
+  </body>
+</html>
