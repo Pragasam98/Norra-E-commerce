@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products - Norra</title>
+    <link rel="stylesheet" href="products.css" />
+  </head>
+  <body>
+    <!-- Header Section -->
+    <header>
+      <h1>Norra</h1>
+      <div class="nav-search-container">
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Shop</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li>
+              <a href="cart.html">Cart <span id="cart-count">(0)</span></a>
+            </li>
+          </ul>
+        </nav>
+        <div class="search-bar">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search for products..."
+          />
+          <button id="search-button">Search</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Product List Section -->
+    <section class="product-list">
+      <div class="container">
+        <h1>Our Products</h1>
+        <div class="product-grid" id="product-grid">
+          <!-- Products will be dynamically generated here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+      <div class="footer-section logo-column">
+        <h1 class="footer-logo">Norra</h1>
+        <!-- Your text logo -->
+        <p>&copy; 2024 Norra E-commerce</p>
+      </div>
+      <div class="footer-section">
+        <h3>Address</h3>
+        <p>Norra E-commerce</p>
+        <p>123 Commerce St.</p>
+        <p>Cityville, ST 12345</p>
+      </div>
+      <div class="footer-section">
+        <h3>Contact</h3>
+        <p>Email: support@norra.com</p>
+        <p>Phone: +1 234 567 890</p>
+        <p>Working Hours: 9 AM - 6 PM</p>
+      </div>
+      <div class="footer-section">
+        <h3>Tags</h3>
+        <a href="#">Shoes</a><br />
+        <a href="#">Accessories</a><br />
+        <a href="#">Apparel</a><br />
+        <a href="#">New Arrivals</a><br />
+        <a href="#">Sale</a>
+      </div>
+    </footer>
+
+    <script src="products.js"></script>
+  </body>
+</html>

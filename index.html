@@ -22,7 +22,7 @@
         <nav>
           <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="#">Shop</a></li>
+            <li><a href="products.html">Shop</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
             <li>
@@ -31,8 +31,12 @@
           </ul>
         </nav>
         <div class="search-bar">
-          <input type="text" placeholder="Search products..." />
-          <button>Search</button>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search for products..."
+          />
+          <button id="search-button">Search</button>
         </div>
       </div>
     </header>
@@ -103,60 +107,69 @@
       <h2>Featured Products</h2>
       <div class="featured-products">
         <div class="product-card">
-          <img src="images/Product+Photography.jpg" alt="Product 1" />
-          <h3>Nike Free RN Flyknit</h3>
-          <p>$19.99</p>
+          <img
+            src="images/product-images/dunk-low-midnight-navy-and-varsity-red-ib2051-1.jpg"
+            alt="Product 1"
+          />
+          <h3>Dunk Low Midnight Navy and Varsity Red</h3>
+          <p>$127.72</p>
           <button
             class="add-to-cart"
             data-id="1"
-            data-name="Nike Free RN Flyknit"
-            data-price="19.99"
-            data-image="images/Product+Photography.jpg"
-          >
-            Add to Cart
-          </button>
-        </div>
-        <div class="product-card">
-          <img src="images/NIKE+DUNK+LOW+JP+QS.png" alt="Product 2" />
-          <h3>NIKE DUNK LOW JP</h3>
-          <p>$29.99</p>
-          <button
-            class="add-to-cart"
-            data-id="2"
-            data-name="NIKE DUNK LOW JP"
-            data-price="29.99"
-            data-image="images/NIKE+DUNK+LOW+JP+QS.png"
+            data-name="Dunk Low Midnight Navy and Varsity Red"
+            data-price="127.72"
+            data-image="images/product-images/dunk-low-midnight-navy-and-varsity-red-ib2051-1.jpg"
           >
             Add to Cart
           </button>
         </div>
         <div class="product-card">
           <img
-            src="images/pngtree-nike-sneakers-showcased-in-tyumen-store-leather-product-nike-shoes-photo-image_49118888.jpg"
-            alt="Product 3"
+            src="images/product-images/AIR+JORDAN+1+MID 1.png"
+            alt="Product 2"
           />
-          <h3>NIKE Interact Run</h3>
-          <p>$39.99</p>
+          <h3>Air Jordan 1 Mid</h3>
+          <p>$217.65</p>
           <button
             class="add-to-cart"
-            data-id="3"
-            data-name="NIKE Interact Run"
-            data-price="39.99"
-            data-image="images/pngtree-nike-sneakers-showcased-in-tyumen-store-leather-product-nike-shoes-photo-image_49118888.jpg"
+            data-id="2"
+            data-name="Air Jordan 1 Mid"
+            data-price="217.65"
+            data-image="images/product-images/AIR+JORDAN+1+MID 1.png"
           >
             Add to Cart
           </button>
         </div>
         <div class="product-card">
-          <img src="images/NIKE+COURT+VISION+LO+NN.png" alt="Product 4" />
-          <h3>NIKE COURT VISION LOW</h3>
-          <p>$49.99</p>
+          <img
+            src="images/product-images/LEBRON+XXII+NRG+EP 1.png"
+            alt="Product 3"
+          />
+          <h3>LeBron XXII 'Token' EP</h3>
+          <p>$217.65</p>
+          <button
+            class="add-to-cart"
+            data-id="3"
+            data-name="LeBron XXII 'Token' EP"
+            data-price="217.65"
+            data-image="images/product-images/LEBRON+XXII+NRG+EP 1.png"
+          >
+            Add to Cart
+          </button>
+        </div>
+        <div class="product-card">
+          <img
+            src="images/product-images/M+AIR+MAX+ALPHA+TRAINER+1.png"
+            alt="Product 4"
+          />
+          <h3>Nike Air Max Alpha Trainer</h3>
+          <p>$100.51</p>
           <button
             class="add-to-cart"
             data-id="4"
-            data-name="NIKE COURT VISION LOW"
-            data-price="49.99"
-            data-image="images/NIKE+COURT+VISION+LO+NN.png"
+            data-name="Nike Air Max Alpha Trainer"
+            data-price="100.51"
+            data-image="images/product-images/M+AIR+MAX+ALPHA+TRAINER+1.png"
           >
             Add to Cart
           </button>
@@ -573,7 +586,5 @@
     </footer>
 
     <script src="script.js"></script>
-    <!-- Include Swiper JS -->
-    <!-- <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> -->
   </body>
 </html>

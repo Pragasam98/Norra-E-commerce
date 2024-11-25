@@ -106,6 +106,9 @@ nav ul li a:hover {
   background-color: #fff;
 }
 
+.cart h1 {
+  margin-bottom: 20px; /* Adjust this value as needed */
+}
 .container {
   width: 100%;
   padding-top: 20px;
@@ -130,6 +133,12 @@ nav ul li a:hover {
   padding: 15px;
   background-color: #f9f9f9;
   border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a soft shadow */
+  transition: box-shadow 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.cart-item:hover {
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
 }
 
 .cart-item-image {
@@ -194,13 +203,18 @@ button:hover {
   flex-direction: column;
   gap: 15px;
   align-items: flex-start;
-  justify-content: flex-end;
-
+  /* justify-content: flex-end; */
   width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a soft shadow */
+  transition: box-shadow 0.3s ease; /* Smooth transition for hover effect */
 }
-.cart-summary-details h3 {
+
+.cart-summary-details:hover {
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+}
+/* .cart-summary-details h3 {
   margin-top: auto;
-}
+} */
 strong {
   font-weight: bold;
 }

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Results</title>
+    <link rel="stylesheet" href="search-results.css" />
+    <!-- Link your CSS file here -->
+  </head>
+  <body>
+    <header>
+      <h1>Norra</h1>
+      <div class="nav-search-container">
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Shop</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li>
+              <a href="cart.html">Cart <span id="cart-count">(0)</span></a>
+            </li>
+          </ul>
+        </nav>
+        <div class="search-bar">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search for products..."
+          />
+          <button id="search-button">Search</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="search-results-page">
+        <h1>Search Results</h1>
+
+        <div class="search-message" id="search-message">
+          <!-- Message will be populated by JS -->
+        </div>
+
+        <div class="product-grid" id="product-list">
+          <!-- Products will be dynamically added here -->
+        </div>
+
+        <div class="no-results-message" id="no-results-message">
+          <!-- No results message -->
+          <p>No products found for your search.</p>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-section logo-column">
+        <h1 class="footer-logo">Norra</h1>
+        <!-- Your text logo -->
+        <p>&copy; 2024 Norra E-commerce</p>
+      </div>
+      <div class="footer-section">
+        <h3>Address</h3>
+        <p>Norra E-commerce</p>
+        <p>123 Commerce St.</p>
+        <p>Cityville, ST 12345</p>
+      </div>
+      <div class="footer-section">
+        <h3>Contact</h3>
+        <p>Email: support@norra.com</p>
+        <p>Phone: +1 234 567 890</p>
+        <p>Working Hours: 9 AM - 6 PM</p>
+      </div>
+      <div class="footer-section">
+        <h3>Tags</h3>
+        <a href="#">Shoes</a><br />
+        <a href="#">Accessories</a><br />
+        <a href="#">Apparel</a><br />
+        <a href="#">New Arrivals</a><br />
+        <a href="#">Sale</a>
+      </div>
+    </footer>
+
+    <script src="search-results.js"></script>
+  </body>
+</html>

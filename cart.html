@@ -15,7 +15,7 @@
         <nav>
           <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="#">Shop</a></li>
+            <li><a href="products.html">Shop</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
             <li>
@@ -24,8 +24,12 @@
           </ul>
         </nav>
         <div class="search-bar">
-          <input type="text" placeholder="Search products..." />
-          <button>Search</button>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search for products..."
+          />
+          <button id="search-button">Search</button>
         </div>
       </div>
     </header>
@@ -41,13 +45,13 @@
           <div class="cart-items">
             <div class="cart-item" data-id="1">
               <img
-                src="images/Product+Photography.jpg"
-                alt="Nike Free RN Flyknit"
+                src="images/product-images/dunk-low-midnight-navy-and-varsity-red-ib2051-1.jpg"
+                alt="Dunk Low Midnight Navy and Varsity Red"
                 class="cart-item-image"
               />
               <div class="cart-item-info">
-                <h3>Nike Free RN Flyknit</h3>
-                <p>Price: $19.99</p>
+                <h3>Dunk Low Midnight Navy and Varsity Red</h3>
+                <p>Price: $127.72</p>
 
                 <!-- Quantity Controls -->
                 <div class="quantity-control">
@@ -60,13 +64,13 @@
             </div>
             <div class="cart-item" data-id="1">
               <img
-                src="images/Product+Photography.jpg"
-                alt="Nike Free RN Flyknit"
+                src="images/product-images/dunk-low-midnight-navy-and-varsity-red-ib2051-1.jp"
+                alt="Dunk Low Midnight Navy and Varsity Red"
                 class="cart-item-image"
               />
               <div class="cart-item-info">
-                <h3>Nike Free RN Flyknit</h3>
-                <p>Price: $19.99</p>
+                <h3>Dunk Low Midnight Navy and Varsity Red</h3>
+                <p>Price: $127.72</p>
 
                 <!-- Quantity Controls -->
                 <div class="quantity-control">
@@ -82,6 +86,7 @@
           <!-- Cart Summary Details (30%) -->
           <div class="cart-summary-details">
             <h2>Summary</h2>
+            <div id="cart-summary-items"></div>
             <p>Product Amount: <span id="product-amount">$19.99</span></p>
             <p>Discount Amount: <span id="discount-amount">$0.00</span></p>
             <h3>

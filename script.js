@@ -117,36 +117,36 @@ document.addEventListener("DOMContentLoaded", function () {
   const products = [
     {
       id: 1,
-      name: "Nike Free RN Flyknit",
-      price: 19.99,
+      name: "Dunk Low Midnight Navy and Varsity Red",
+      price: 127.72,
       quantity: 1,
-      image: "images/Product+Photography.jpg",
+      image:
+        "images/product-images/dunk-low-midnight-navy-and-varsity-red-ib2051-1.jpg",
       description: "A lightweight running shoe for comfort and performance.",
     },
     {
       id: 2,
-      name: "NIKE DUNK LOW JP",
-      price: 29.99,
+      name: "Air Jordan 1 Mid",
+      price: 136.01,
       quantity: 1,
-      image: "images/NIKE+DUNK+LOW+JP+QS.png",
+      image: "images/product-images/AIR+JORDAN+1+MID 1.png",
       description: "Classic style with a low-top design.",
     },
     {
       id: 3,
-      name: "NIKE Interact Run",
-      price: 39.99,
+      name: "LeBron XXII 'Token' EP",
+      price: 217.65,
       quantity: 1,
-      image:
-        "images/pngtree-nike-sneakers-showcased-in-tyumen-store-leather-product-nike-shoes-photo-image_49118888.jpg",
+      image: "images/product-images/LEBRON+XXII+NRG+EP 1.png",
       description:
         "Running shoes with great comfort for long-distance running.",
     },
     {
       id: 4,
-      name: "NIKE COURT VISION LOW",
-      price: 49.99,
+      name: "Nike Air Max Alpha Trainer",
+      price: 100.51,
       quantity: 1,
-      image: "images/NIKE+COURT+VISION+LO+NN.png",
+      image: "images/product-images/M+AIR+MAX+ALPHA+TRAINER+1.png",
       description: "Casual shoes with a sporty look for everyday wear.",
     },
   ];
@@ -281,5 +281,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Update cart count in navigation
     updateCartCount();
+  }
+});
+
+// search
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.body.addEventListener("click", function (event) {
+    if (event.target.id === "search-button") {
+      const searchInput = document.getElementById("search-input");
+      if (!searchInput) return;
+
+      const query = searchInput.value.trim();
+      if (!query) {
+        alert("Please enter a search term.");
+        return;
+      }
+
+      // Redirect to search results page with query as a URL parameter
+      window.location.href = `search-results.html?q=${encodeURIComponent(
+        query
+      )}`;
+    }
+  });
+
+  const searchInput = document.getElementById("search-input");
+  if (searchInput) {
+    searchInput.addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+        const query = searchInput.value.trim();
+        if (!query) {
+          alert("Please enter a search term.");
+          return;
+        }
+
+        // Redirect to search results page with query as a URL parameter
+        window.location.href = `search-results.html?q=${encodeURIComponent(
+          query
+        )}`;
+      }
+    });
   }
 });
