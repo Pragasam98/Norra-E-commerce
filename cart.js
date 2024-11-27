@@ -5,9 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const cartTotal = document.getElementById("total-amount");
   const productAmount = document.getElementById("product-amount");
   const discountAmount = document.getElementById("discount-amount");
-  const summaryItemsContainer = document.getElementById("cart-summary-items");
 
-  // Handle the "Add to Cart" functionality on the product detail page
+  // Handle "Add to Cart" on the product detail page
   if (window.location.pathname.includes("product-detail.html")) {
     const addToCartButton = document.getElementById("add-to-cart");
     addToCartButton.addEventListener("click", function () {
@@ -19,19 +18,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const product = {
         id: this.getAttribute("data-id"),
-        name: document.querySelector(".product-name").innerText,
+        name: document.querySelector("#product-name").innerText,
         price: parseFloat(
-          document.querySelector(".product-price").innerText.replace("$", "")
+          document.querySelector("#product-price").innerText.replace("$", "")
         ),
-        image: document.querySelector(".product-image").src,
-        size: selectedSize, // Add size information here
+        image: document.querySelector("#main-product-image img").src,
+        size: selectedSize,
         quantity: 1,
       };
       addToCart(product);
     });
   }
 
-  // Function to add items to the cart and store in localStorage
+  // Add items to cart and store in localStorage
   function addToCart(product) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const existingProduct = cart.find(
@@ -49,15 +48,13 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   }
 
-  // Function to update the cart display (on the cart page)
+  // Update the cart display on the cart page
   function updateCartDisplay() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    productList.innerHTML = ""; // Clear the current cart items
+    productList.innerHTML = ""; // Clear current cart items
 
-    // If the cart is empty, show an empty cart message
     if (cart.length === 0) {
       productList.innerHTML = "<p>Your cart is empty.</p>";
-      summaryItemsContainer.innerHTML = "<p>No items in cart.</p>";
       productAmount.innerText = "$0.00";
       discountAmount.innerText = "$0.00";
       cartTotal.innerText = "$0.00";
@@ -65,39 +62,47 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    // Loop through each item in the cart and display it
     cart.forEach((item) => {
       const cartItemHTML = `
-        <div class="cart-item" data-id="${item.id}">
-          <img src="${item.image}" alt="${item.name}" class="cart-item-image" />
+        <div class="cart-item" data-id="${item.id}" data-size="${item.size}">
+          <div class="cart-item-left">
+            <div class="cart-item-image-container">
+              <img src="${item.image}" alt="${
+        item.name
+      }" class="cart-item-image" />
+            </div>
+            <div class="quantity-control">
+              <button class="decrease-quantity" data-id="${
+                item.id
+              }" data-size="${item.size}">-</button>
+              <span class="quantity-display" data-id="${item.id}" data-size="${
+        item.size
+      }">${item.quantity}</span>
+              <button class="increase-quantity" data-id="${
+                item.id
+              }" data-size="${item.size}">+</button>
+             
+          </div>
+           <button class="remove-from-cart" data-id="${item.id}" data-size="${
+        item.size
+      }">Remove</button>
+            </div>
           <div class="cart-item-info">
             <h3>${item.name}</h3>
-            <p>Price: $${item.price}</p>
-            <p>Size: ${item.size}</p> <!-- Display the selected size -->
-            <!-- Quantity Controls -->
-            <div class="quantity-control">
-              <button class="decrease-quantity" data-id="${item.id}">-</button>
-              <span class="quantity" data-id="${item.id}">${item.quantity}</span>
-              <button class="increase-quantity" data-id="${item.id}">+</button>
-            </div>
-            <button class="remove-from-cart" data-id="${item.id}">Remove</button>
+            <p>Size: ${item.size}</p>
+            <p>Price: $<span class="item-total" data-id="${item.id}">${(
+        item.price * item.quantity
+      ).toFixed(2)}</span></p>
+            <p>Quantity: <span class="quantity-info" data-id="${
+              item.id
+            }" data-size="${item.size}">${item.quantity}</span></p>
           </div>
         </div>
       `;
       productList.innerHTML += cartItemHTML;
-
-      // Add summary items
-      const summaryItemHTML = `
-        <div class="summary-item">
-          <p>${item.name} (Size: ${item.size}, x${item.quantity}): $${(
-        item.price * item.quantity
-      ).toFixed(2)}</p>
-        </div>
-      `;
-      summaryItemsContainer.innerHTML += summaryItemHTML;
     });
 
-    // Calculate the total price and display it
+    // Calculate total price
     const total = cart.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0
@@ -112,16 +117,17 @@ document.addEventListener("DOMContentLoaded", function () {
     // Update cart count
     updateCartCount();
 
-    // Add event listeners for quantity changes and removal
-    addEventListeners(cart);
+    // Add listeners for cart actions
+    addCartListeners(cart);
   }
 
-  // Function to handle quantity changes (plus/minus) and item removal
-  function addEventListeners(cart) {
+  // Handle quantity and removal actions
+  function addCartListeners(cart) {
     document.querySelectorAll(".increase-quantity").forEach((button) => {
       button.addEventListener("click", (e) => {
         const id = e.target.getAttribute("data-id");
-        const item = cart.find((item) => item.id == id);
+        const size = e.target.getAttribute("data-size");
+        const item = cart.find((item) => item.id == id && item.size == size);
         if (item) {
           item.quantity++;
           localStorage.setItem("cart", JSON.stringify(cart));
@@ -133,42 +139,46 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".decrease-quantity").forEach((button) => {
       button.addEventListener("click", (e) => {
         const id = e.target.getAttribute("data-id");
-        const item = cart.find((item) => item.id == id);
-        if (item && item.quantity > 1) {
+        const size = e.target.getAttribute("data-size");
+        const item = cart.find((item) => item.id == id && item.size == size);
+        if (item) {
           item.quantity--;
-        } else {
-          cart = cart.filter((item) => item.id != id); // Remove item if quantity is 1
+          if (item.quantity <= 0) {
+            cart = cart.filter((item) => !(item.id == id && item.size == size));
+          }
+          localStorage.setItem("cart", JSON.stringify(cart));
+          updateCartDisplay();
         }
-        localStorage.setItem("cart", JSON.stringify(cart));
-        updateCartDisplay();
       });
     });
 
     document.querySelectorAll(".remove-from-cart").forEach((button) => {
       button.addEventListener("click", (e) => {
         const id = e.target.getAttribute("data-id");
-        cart = cart.filter((item) => item.id != id); // Remove item from cart
+        const size = e.target.getAttribute("data-size");
+        cart = cart.filter((item) => !(item.id == id && item.size == size));
         localStorage.setItem("cart", JSON.stringify(cart));
         updateCartDisplay();
       });
     });
   }
 
-  // Function to update the cart count in the navigation bar
+  // Update the cart count in the navigation bar
   function updateCartCount() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const cartCount = document.getElementById("cart-count");
-    cartCount.innerText = `(${cart.length})`; // Update the cart count in the nav
+    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.innerText = `(${itemCount})`;
   }
 
-  // Initialize cart display on the cart page
+  // Initialize cart display on cart page
   if (window.location.pathname.includes("cart.html")) {
     updateCartDisplay();
   } else {
-    updateCartCount(); // Update cart count in the nav bar for other pages
+    updateCartCount();
   }
+});
 
-  // Handle search functionality
+document.addEventListener("DOMContentLoaded", function () {
   document.body.addEventListener("click", function (event) {
     if (event.target.id === "search-button") {
       const searchInput = document.getElementById("search-input");
@@ -204,4 +214,251 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.body.addEventListener("click", function (event) {
+    if (event.target.id === "search-button") {
+      const searchInput = document.getElementById("search-input");
+      if (!searchInput) return;
+
+      const query = searchInput.value.trim();
+      if (!query) {
+        alert("Please enter a search term.");
+        return;
+      }
+
+      // Redirect to search results page with query as a URL parameter
+      window.location.href = `search-results.html?q=${encodeURIComponent(
+        query
+      )}`;
+    }
+  });
+
+  const searchInput = document.getElementById("search-input");
+  if (searchInput) {
+    searchInput.addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+        const query = searchInput.value.trim();
+        if (!query) {
+          alert("Please enter a search term.");
+          return;
+        }
+
+        // Redirect to search results page with query as a URL parameter
+        window.location.href = `search-results.html?q=${encodeURIComponent(
+          query
+        )}`;
+      }
+    });
+  }
+});
+const hamburger = document.querySelector(".hamburger");
+const nav = document.querySelector("nav");
+
+hamburger.addEventListener("click", () => {
+  nav.classList.toggle("active");
+});
+// Open the modal when "Contact Us" button is clicked
+document
+  .getElementById("contactUsButton")
+  .addEventListener("click", function () {
+    document.getElementById("contactModal").style.display = "block";
+  });
+
+// Close the modal when the user clicks on the close button
+document.getElementById("closeModal").addEventListener("click", function () {
+  document.getElementById("contactModal").style.display = "none";
+});
+
+// Close the modal if the user clicks outside the modal content
+window.addEventListener("click", function (event) {
+  if (event.target == document.getElementById("contactModal")) {
+    document.getElementById("contactModal").style.display = "none";
+  }
+});
+
+// Helper function to show error messages
+function showError(inputId, errorMessage) {
+  const errorSpan = document.getElementById(inputId + "Error");
+  errorSpan.innerText = errorMessage;
+  errorSpan.style.display = "block"; // Show the error message
+}
+
+// Helper function to hide specific error message
+function hideError(inputId) {
+  const errorSpan = document.getElementById(inputId + "Error");
+  errorSpan.style.display = "none"; // Hide the error message
+}
+
+// Helper function to hide all error messages
+function hideAllErrors() {
+  const errorSpans = document.querySelectorAll(".error-message");
+  errorSpans.forEach((span) => {
+    span.style.display = "none";
+  });
+}
+
+// Open the modal when the "Contact Us" button is clicked
+document
+  .getElementById("contactUsButton")
+  .addEventListener("click", function () {
+    document.getElementById("contactModal").style.display = "block";
+  });
+
+// Close the modal when the close button (&times;) is clicked
+document.getElementById("closeModal").addEventListener("click", function () {
+  document.getElementById("contactModal").style.display = "none";
+});
+
+// Close the modal if the user clicks outside the modal content
+window.addEventListener("click", function (e) {
+  if (e.target === document.getElementById("contactModal")) {
+    document.getElementById("contactModal").style.display = "none";
+  }
+});
+
+// Handle form submission
+document.getElementById("contactForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  // Fetch form input values
+  const firstName = document.getElementById("firstName").value.trim();
+  const lastName = document.getElementById("lastName").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const mobileNumber = document.getElementById("mobileNumber").value.trim();
+  const country = document.getElementById("country").value.trim();
+  const state = document.getElementById("state").value.trim();
+  const city = document.getElementById("city").value.trim();
+  const pincode = document.getElementById("pincode").value.trim();
+  const services = document.getElementById("services").value.trim();
+  const dob = document.getElementById("dob").value.trim();
+  const message = document.getElementById("message").value.trim();
+
+  // Email validation regex
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  // Reset error messages first
+  hideAllErrors();
+
+  let isValid = true;
+
+  // Validation checks (only showing first error)
+  if (!firstName) {
+    showError("firstName", "Please enter your first name");
+    isValid = false;
+  } else if (!lastName) {
+    showError("lastName", "Please enter your last name");
+    isValid = false;
+  } else if (!email) {
+    showError("email", "Please enter a valid email address");
+    isValid = false;
+  } else if (!emailRegex.test(email)) {
+    showError(
+      "email",
+      "Please enter a valid email address (e.g., example@domain.com)"
+    );
+    isValid = false;
+  } else if (
+    !mobileNumber ||
+    mobileNumber.length !== 10 ||
+    isNaN(mobileNumber)
+  ) {
+    showError("mobileNumber", "Please enter a valid 10-digit mobile number");
+    isValid = false;
+  } else if (!country) {
+    showError("country", "Please enter your country");
+    isValid = false;
+  } else if (!state) {
+    showError("state", "Please enter your state");
+    isValid = false;
+  } else if (!city) {
+    showError("city", "Please enter your city");
+    isValid = false;
+  } else if (!pincode || pincode.length !== 6 || isNaN(pincode)) {
+    showError("pincode", "Pincode must be 6 digits");
+    isValid = false;
+  } else if (!services) {
+    showError("services", "Please select a service");
+    isValid = false;
+  } else if (!dob) {
+    showError("dob", "Please select your date of birth");
+    isValid = false;
+  } else if (!message) {
+    showError("message", "Please enter your message");
+    isValid = false;
+  }
+
+  // If form is valid, show success message and store data in localStorage
+  if (isValid) {
+    // Save form data in an object
+    const formData = {
+      firstName,
+      lastName,
+      email,
+      mobileNumber,
+      country,
+      state,
+      city,
+      pincode,
+      services,
+      dob,
+      message,
+    };
+
+    // Try storing in localStorage
+    try {
+      localStorage.setItem("contactFormData", JSON.stringify(formData)); // Store data
+      console.log("Data saved to localStorage:", formData);
+
+      // Show success message
+      document.getElementById("successMessage").style.display = "block";
+      setTimeout(() => {
+        document.getElementById("successMessage").style.display = "none";
+      }, 5000);
+
+      // Reset the form after submission
+      document.getElementById("contactForm").reset();
+    } catch (error) {
+      console.error("Error saving to localStorage:", error); // Error handling
+    }
+  } else {
+    // Hide success message if form is invalid
+    document.getElementById("successMessage").style.display = "none";
+  }
+});
+
+// Add event listeners to hide error messages when the user starts typing
+document.getElementById("firstName").addEventListener("input", function () {
+  hideError("firstName");
+});
+document.getElementById("lastName").addEventListener("input", function () {
+  hideError("lastName");
+});
+document.getElementById("email").addEventListener("input", function () {
+  hideError("email");
+});
+document.getElementById("mobileNumber").addEventListener("input", function () {
+  hideError("mobileNumber");
+});
+document.getElementById("country").addEventListener("input", function () {
+  hideError("country");
+});
+document.getElementById("state").addEventListener("input", function () {
+  hideError("state");
+});
+document.getElementById("city").addEventListener("input", function () {
+  hideError("city");
+});
+document.getElementById("pincode").addEventListener("input", function () {
+  hideError("pincode");
+});
+document.getElementById("services").addEventListener("input", function () {
+  hideError("services");
+});
+document.getElementById("dob").addEventListener("input", function () {
+  hideError("dob");
+});
+document.getElementById("message").addEventListener("input", function () {
+  hideError("message");
 });

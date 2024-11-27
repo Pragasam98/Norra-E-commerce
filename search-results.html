@@ -11,17 +11,27 @@
     <header>
       <h1>Norra</h1>
       <div class="nav-search-container">
+        <!-- Hamburger Icon -->
+        <div class="hamburger">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <!-- Navigation Links -->
         <nav>
           <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="products.html">Shop</a></li>
             <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
+            <li>
+              <a id="contactUsButton" class="contact-us-btn"> Contact Us </a>
+            </li>
             <li>
               <a href="cart.html">Cart <span id="cart-count">(0)</span></a>
             </li>
           </ul>
         </nav>
+        <!-- Search Bar -->
         <div class="search-bar">
           <input
             type="text"
@@ -35,19 +45,128 @@
 
     <main>
       <div class="search-results-page">
-        <h1>Search Results</h1>
+        <div class="container">
+          <h1>Search Results</h1>
 
-        <div class="search-message" id="search-message">
-          <!-- Message will be populated by JS -->
+          <div class="search-message" id="search-message">
+            <!-- Message will be populated by JS -->
+          </div>
+
+          <div class="product-grid" id="product-list">
+            <!-- Products will be dynamically added here -->
+          </div>
+
+          <div class="no-results-message" id="no-results-message">
+            <!-- No results message -->
+            <p>No products found for your search.</p>
+          </div>
         </div>
+      </div>
+      <!-- Contact Us Modal -->
+      <div id="contactModal" class="modal">
+        <div class="modal-content">
+          <span id="closeModal" class="close-btn">&times;</span>
+          <h2>Contact Us</h2>
+          <div id="successMessage">Form submitted successfully!</div>
+          <form id="contactForm">
+            <div class="grid-container">
+              <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" />
+                <span class="error-message" id="firstNameError"
+                  >Please enter your first name</span
+                >
+              </div>
 
-        <div class="product-grid" id="product-list">
-          <!-- Products will be dynamically added here -->
-        </div>
+              <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" />
+                <span class="error-message" id="lastNameError"
+                  >Please enter your last name</span
+                >
+              </div>
 
-        <div class="no-results-message" id="no-results-message">
-          <!-- No results message -->
-          <p>No products found for your search.</p>
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" />
+                <span class="error-message" id="emailError"
+                  >Please enter a valid email address (e.g.,
+                  example@domain.com)</span
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="mobileNumber">Mobile Number:</label>
+                <input type="tel" id="mobileNumber" name="mobileNumber" />
+                <span class="error-message" id="mobileNumberError"
+                  >Please enter a valid 10-digit number</span
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="country" />
+                <span class="error-message" id="countryError"
+                  >Please enter your country</span
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" />
+                <span class="error-message" id="stateError"
+                  >Please enter your state</span
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" />
+                <span class="error-message" id="cityError"
+                  >Please enter your city</span
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="pincode">Pincode:</label>
+                <input type="text" id="pincode" name="pincode" />
+                <span class="error-message" id="pincodeError"
+                  >Please enter a valid 6-digit pincode</span
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="services">Services:</label>
+                <select id="services" name="services">
+                  <option value="">Select a Service</option>
+                  <option value="webDevelopment">Web Development</option>
+                  <option value="appDevelopment">App Development</option>
+                  <option value="digitalMarketing">Digital Marketing</option>
+                </select>
+                <span class="error-message" id="servicesError"
+                  >Please select a service</span
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" />
+                <span class="error-message" id="dobError"
+                  >Please select your date of birth</span
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message:</label>
+              <textarea id="message" name="message" rows="4"></textarea>
+              <span class="error-message" id="messageError"
+                >Please enter your message</span
+              >
+            </div>
+
+            <button type="submit" id="submitBtn">Contact Us</button>
+          </form>
         </div>
       </div>
     </main>

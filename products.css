@@ -12,6 +12,7 @@ body {
 }
 
 /* Header with Navigation and Search Bar */
+/* Header Styling */
 header {
   position: absolute; /* Default position */
   top: 0;
@@ -24,30 +25,45 @@ header {
   align-items: center;
   justify-content: space-between;
   z-index: 1000;
-  transition: all 0.3s ease-in-out; /* Smooth transition */
+  transition: all 0.3s ease-in-out;
 }
 
 header.fixed {
-  position: fixed; /* Fixed position when sticky */
-  top: 0; /* Stay at the top */
-  background-color: rgba(51, 51, 51, 0.9); /* Semi-transparent when sticky */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for sticky header */
-  padding: 10px 20px; /* Adjust padding when sticky */
+  position: fixed;
+  top: 0;
+  background-color: rgba(51, 51, 51, 0.9);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
 }
 
 header h1 {
   font-size: 28px;
 }
 
+/* Hamburger Icon Styling */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
 /* Navigation and Search Bar Container */
 .nav-search-container {
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
   width: 100%;
 }
 
-/* Navigation Links */
+/* Navigation Links (Desktop) */
 nav ul {
   list-style: none;
   display: flex;
@@ -81,14 +97,118 @@ nav ul li a:hover {
   outline: none;
   width: 200px;
   color: #333;
+  font-size: 14px;
 }
 
 .search-bar button {
-  padding: 8px;
+  padding: 8px 12px;
   background-color: #555;
   color: #fff;
   border: none;
   cursor: pointer;
+  font-size: 14px;
+}
+
+.search-bar button:hover {
+  background-color: #666;
+}
+
+/* Responsive Design */
+/* General Header and Layout */
+header {
+  position: absolute; /* Default position */
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  transition: all 0.3s ease-in-out; /* Smooth transition */
+}
+
+header.fixed {
+  position: fixed; /* Fixed position when sticky */
+  top: 0; /* Stay at the top */
+  background-color: rgba(51, 51, 51, 0.9); /* Semi-transparent when sticky */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for sticky header */
+  padding: 10px 20px; /* Adjust padding when sticky */
+}
+
+header h1 {
+  font-size: 28px;
+}
+
+/* Hamburger Icon Styling */
+.hamburger {
+  display: none; /* Hidden by default */
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+/* Navigation and Search Bar Container */
+.nav-search-container {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 100%;
+}
+
+/* Navigation Links */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 10px;
+}
+
+nav ul li a:hover {
+  background-color: #444;
+  border-radius: 4px;
+}
+
+/* Search Bar Styling */
+.search-bar {
+  display: flex; /* Ensure the search bar is visible by default */
+  align-items: center;
+  background-color: #444;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-left: 10px;
+}
+
+.search-bar input[type="text"] {
+  padding: 8px;
+  border: none;
+  outline: none;
+  width: 200px;
+  color: #333;
+  font-size: 14px;
+}
+
+.search-bar button {
+  padding: 8px 12px;
+  background-color: #555;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .search-bar button:hover {
@@ -96,8 +216,94 @@ nav ul li a:hover {
 }
 
 @media (max-width: 768px) {
-  header.fixed {
-    padding: 8px 15px;
+  /* Header Styles */
+  header {
+    padding: 16px 15px;
+  }
+
+  header h1 {
+    font-size: 24px;
+  }
+
+  /* Default Search Bar Hidden on Mobile */
+  .search-bar:not(.mobile-search-bar) {
+    display: none;
+  }
+
+  /* Hamburger Menu */
+  .hamburger {
+    display: flex;
+  }
+
+  /* Navigation Styles */
+  nav {
+    display: none;
+    flex-direction: column;
+    background-color: #333;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    border-radius: 0 0 5px 5px;
+  }
+
+  nav.active {
+    display: flex;
+  }
+
+  nav ul {
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+  }
+
+  nav ul li {
+    width: 100%;
+  }
+
+  nav ul li a {
+    display: block;
+    padding: 10px 0;
+    width: 100%;
+    border-bottom: 1px solid #444;
+  }
+
+  nav ul li a:hover {
+    background-color: #555;
+  }
+
+  /* Display Mobile Search Bar When Dropdown is Open */
+  .mobile-search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #444;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 10px auto; /* Center it */
+    padding: 5px;
+  }
+
+  .mobile-search-bar input[type="text"] {
+    width: 100%;
+    color: #333;
+    padding: 8px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+  }
+
+  .mobile-search-bar button {
+    padding: 8px 12px;
+    background-color: #555;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .mobile-search-bar button:hover {
+    background-color: #666;
   }
 }
 
@@ -196,6 +402,161 @@ nav ul li a:hover {
   }
 }
 
+/* Modal Styles */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000; /* Ensure the modal is on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  overflow: auto; /* Prevent scrolling */
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 600px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+/* Form Grid Layout */
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input,
+select,
+textarea {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* Submit Button Styles */
+button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+/* Error Message Styling */
+.error-message {
+  color: red;
+  font-size: 12px;
+  display: none; /* Hide error message by default */
+}
+
+#successMessage {
+  color: green;
+  font-size: 16px;
+  text-align: center;
+  display: none;
+}
+
+/* Responsive Design for Mobile */
+@media screen and (max-width: 768px) {
+  .modal-content {
+    width: 90%; /* Modal width 90% on smaller screens */
+    padding: 15px;
+    max-height: 80%; /* Reduce max-height to make the modal more compact */
+    overflow-y: auto; /* Enable scrolling inside the modal if needed */
+  }
+
+  .grid-container {
+    grid-template-columns: 1fr; /* Stack form fields vertically on mobile */
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px; /* Slightly larger text input fields */
+  }
+
+  button[type="submit"] {
+    padding: 12px; /* Increase padding for easier clicking */
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+}
+
+/* Small Screen Adjustments */
+@media screen and (max-width: 480px) {
+  .modal-content {
+    width: 95%; /* Further reduce width on very small screens */
+    padding: 10px;
+    max-height: 70%; /* Reduce height further on very small screens */
+  }
+
+  button[type="submit"] {
+    font-size: 16px; /* Adjust button font size for small screens */
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 18px; /* Reduce header size */
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 12px; /* Slightly more padding for better touch experience */
+    font-size: 14px; /* Adjust font size */
+  }
+
+  .error-message {
+    font-size: 14px; /* Make error messages a bit larger */
+  }
+}
+
 /* Footer Styling */
 footer {
   background-color: #333;
@@ -280,17 +641,48 @@ footer.fixed {
 /* Responsive Footer */
 @media (max-width: 768px) {
   footer {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 20px;
+    flex-direction: column; /* Stack sections vertically */
+    align-items: center; /* Center content horizontally */
+    padding: 10px; /* Reduce padding for smaller screens */
+    text-align: center; /* Center text for all sections */
   }
 
   .footer-section {
-    max-width: 100%;
+    max-width: 100%; /* Use full width for sections */
+    margin: 10px 0; /* Add vertical spacing */
   }
 
+  .footer-logo {
+    font-size: 25px; /* Adjust font size for logo */
+    margin-bottom: 15px; /* Add spacing below logo */
+  }
+
+  .footer-section h3 {
+    font-size: 18px; /* Smaller headings */
+    margin-bottom: 8px;
+  }
+
+  .footer-section p,
+  .footer-section a {
+    font-size: 14px; /* Smaller text for content */
+    line-height: 1.5; /* Improve readability */
+  }
+
+  .footer-section li {
+    font-size: 13px; /* Smaller list items */
+  }
+
+  .footer-section ul {
+    padding: 0;
+    margin: 0;
+    list-style: none; /* Remove list styling */
+  }
+
+  /* Center the logo column in mobile view */
   .footer-section.logo-column {
-    text-align: center; /* Center logo text on smaller screens */
+    text-align: center; /* Center logo column */
+    padding-left: 0; /* Remove left padding in mobile view */
+    padding-right: 0; /* Remove right padding in mobile view */
+    margin-top: 20px; /* Add spacing on top if needed */
   }
 }
