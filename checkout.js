@@ -1,140 +1,97 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Product Slider
-  let slideInterval;
-  let currentSlide = 0;
-  let slides = document.querySelectorAll(".product-image-box");
-  let totalSlides = slides.length;
+  function updateCheckoutPage() {
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartItemsList = document.getElementById("cart-items-list");
+    const productAmount = document.getElementById("product-amount");
+    const discountAmount = document.getElementById("discount-amount");
+    const totalAmount = document.getElementById("total-amount");
 
-  function moveSlide(step) {
-    currentSlide = (currentSlide + step + totalSlides) % totalSlides;
-    updateSliderPosition();
-  }
+    if (cartItems.length === 0) {
+      cartItemsList.innerHTML = "<p>Your cart is empty.</p>";
+      productAmount.innerText = "₹0.00";
+      discountAmount.innerText = "₹0.00";
+      totalAmount.innerText = "₹0.00";
+      return;
+    }
 
-  function updateSliderPosition() {
-    document.querySelector(".slider").style.transform = `translateX(-${
-      currentSlide * 100
-    }%)`;
-  }
-
-  // Function to start the slider (loop)
-  function startSlider() {
-    slideInterval = setInterval(() => moveSlide(1), 3000);
-  }
-
-  // Function to pause the slider (stop the loop)
-  function pauseSlider() {
-    clearInterval(slideInterval);
-  }
-
-  // Function to resume the slider
-  function resumeSlider() {
-    startSlider();
-  }
-
-  // Event listeners to pause and resume the slider on mouse enter/leave
-  document
-    .querySelector(".slider-container")
-    .addEventListener("mouseenter", pauseSlider);
-  document
-    .querySelector(".slider-container")
-    .addEventListener("mouseleave", resumeSlider);
-
-  // Start the slider initially
-  startSlider();
-
-  // Testimonial Carousel
-  var swiper = new Swiper(".testimonial-wrapper", {
-    slidesPerView: 1,
-    slidesPerGroup: 1,
-    spaceBetween: 30,
-    loop: true,
-    speed: 2000,
-    autoplay: true,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-    breakpoints: {
-      768: { slidesPerView: 3, slidesPerGroup: 1 },
-      480: { slidesPerView: 2, slidesPerGroup: 1 },
-    },
-  });
-
-  // Sticky Header
-  const header = document.querySelector("header");
-  const featuredProducts = document.querySelector(".featured-products");
-
-  if (featuredProducts) {
-    // Check if the element exists before using offsetTop
-    const featuredProductsOffset = featuredProducts.offsetTop;
-
-    window.addEventListener("scroll", function () {
-      if (window.scrollY >= featuredProductsOffset) {
-        header.classList.add("fixed");
-      } else {
-        header.classList.remove("fixed");
-      }
+    let total = 0;
+    cartItemsList.innerHTML = "";
+    cartItems.forEach((item) => {
+      const itemHTML = `
+        <div class="cart-item">
+          <h4>${item.name}</h4>
+          <p>Price: ₹${item.price.toFixed(2)} x ${item.quantity} = ₹${(
+        item.price * item.quantity
+      ).toFixed(2)}</p>
+        </div>
+      `;
+      cartItemsList.innerHTML += itemHTML;
+      total += item.price * item.quantity;
     });
+
+    const discount = 5.0;
+    const finalAmount = total - discount;
+    productAmount.innerText = `₹${total.toFixed(2)}`;
+    discountAmount.innerText = `₹${discount.toFixed(2)}`;
+    totalAmount.innerText = `₹${finalAmount.toFixed(2)}`;
+
+    // Store the amounts in localStorage for payment page
+    localStorage.setItem("productAmount", total);
+    localStorage.setItem("discountAmount", discount);
+    localStorage.setItem("totalAmount", finalAmount);
+
+    const addressData = JSON.parse(localStorage.getItem("addressData"));
+    if (addressData) {
+      document.getElementById("homeStreet-address").innerText =
+        addressData.homeStreet;
+      document.getElementById("homeCity-address").innerText =
+        addressData.homeCity;
+      document.getElementById("homeState-address").innerText =
+        addressData.homeState;
+      document.getElementById("homePincode-address").innerText =
+        addressData.homePincode;
+    }
   }
+
+  updateCheckoutPage();
+
+  const proceedToPaymentButton = document.getElementById("proceedToPayment");
+
+  proceedToPaymentButton.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const addressData = JSON.parse(localStorage.getItem("addressData"));
+
+    if (cartItems.length === 0 || !addressData) {
+      alert(
+        "Please make sure your cart is not empty and you have entered your address."
+      );
+      return;
+    }
+
+    alert("Proceeding to payment...");
+    window.location.href = "payment.html";
+  });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  const products = [
-    {
-      id: 1,
-      name: "Dunk Low Midnight Navy and Varsity Red",
-      price: 10795.0,
-      image:
-        "images/product-images/dunk-low-midnight-navy-and-varsity-red-ib2051-1.jpg",
-      description: "A lightweight running shoe for comfort and performance.",
-    },
-    {
-      id: 2,
-      name: "Air Jordan 1 Mid",
-      price: 13601.0,
-      image: "images/product-images/AIR+JORDAN+1+MID 1.png",
-      description: "Classic style with a low-top design.",
-    },
-    {
-      id: 3,
-      name: "LeBron XXII 'Token' EP",
-      price: 21765.0,
-      image: "images/product-images/LEBRON+XXII+NRG+EP 1.png",
-      description:
-        "Running shoes with great comfort for long-distance running.",
-    },
-    {
-      id: 4,
-      name: "Nike Air Max Alpha Trainer",
-      price: 10051.0,
-      image: "images/product-images/M+AIR+MAX+ALPHA+TRAINER+1.png",
-      description: "Casual shoes with a sporty look for everyday wear.",
-    },
-  ];
+// Function to update cart count in navigation (total quantity of items)
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cartCount = document.getElementById("cart-count");
 
-  const productGrid = document.getElementById("product-grid");
+  if (cartCount) {
+    // Calculate total quantity (sum of all product quantities in the cart)
+    const totalQuantity = cart.reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
+    cartCount.innerText = `(${totalQuantity})`; // Update the cart count dynamically
+  }
+}
 
-  // Loop through products and dynamically add them to the product grid
-  products.forEach((product) => {
-    const productHTML = `
-      <div class="product-card" data-id="${product.id}">
-        <img src="${product.image}" alt="${product.name}" />
-        <h3>${product.name}</h3>
-        <p>₹${product.price.toLocaleString()}</p>
-        <p>${product.description}</p>
-      </div>
-    `;
-    productGrid.innerHTML += productHTML;
-  });
-
-  // Make the entire product card clickable
-  document.querySelectorAll(".product-card").forEach((card) => {
-    card.addEventListener("click", function () {
-      const productId = this.getAttribute("data-id");
-      window.location.href = `product-detail.html?id=${productId}`;
-    });
-  });
-});
+// Initial cart count update when the page loads
+updateCartCount();
 
 // search
 
@@ -182,13 +139,13 @@ document.addEventListener("DOMContentLoaded", function () {
   handleSearch("desktop-search-input", "desktop-search-button");
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const hamburger = document.querySelector(".hamburger");
-  const nav = document.querySelector("nav");
+//hamburger
 
-  hamburger.addEventListener("click", () => {
-    nav.classList.toggle("active");
-  });
+const hamburger = document.querySelector(".hamburger");
+const nav = document.querySelector("nav");
+
+hamburger.addEventListener("click", () => {
+  nav.classList.toggle("active");
 });
 
 // Open the modal when "Contact Us" button is clicked
@@ -394,43 +351,3 @@ document.getElementById("dob").addEventListener("input", function () {
 document.getElementById("message").addEventListener("input", function () {
   hideError("message");
 });
-
-// Handle "Add to Cart" functionality
-document.querySelectorAll(".add-to-cart").forEach((button) => {
-  button.addEventListener("click", (e) => {
-    const id = e.target.getAttribute("data-id");
-    const product = products.find((p) => p.id == id);
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const existingItem = cart.find((item) => item.id == product.id);
-
-    if (existingItem) {
-      existingItem.quantity++; // If the product already exists, increase the quantity
-    } else {
-      cart.push({ ...product, quantity: 1 }); // Add new product to the cart with quantity 1
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart)); // Save the updated cart back to localStorage
-
-    // Update the cart count in the navigation bar across pages
-    updateCartCount();
-  });
-});
-
-// Function to update cart count in navigation (total quantity of items)
-function updateCartCount() {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const cartCount = document.getElementById("cart-count");
-
-  if (cartCount) {
-    // Calculate total quantity (sum of all product quantities in the cart)
-    const totalQuantity = cart.reduce(
-      (total, item) => total + item.quantity,
-      0
-    );
-    cartCount.innerText = `(${totalQuantity})`; // Update the cart count dynamically
-  }
-}
-
-// Initial cart count update when the page loads
-updateCartCount();

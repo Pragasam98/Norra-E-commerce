@@ -1,22 +1,68 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Get the query parameter from the URL
+  // Function to handle search
+  function handleSearch(inputId, buttonId) {
+    const searchInput = document.getElementById(inputId);
+    const searchButton = document.getElementById(buttonId);
+
+    if (!searchInput || !searchButton) return;
+
+    // Handle search on button click
+    searchButton.addEventListener("click", function () {
+      const query = searchInput.value.trim();
+      if (!query) {
+        // If the input is empty, show error message and prevent search
+        document.getElementById("search-error-message").style.display = "block";
+        return;
+      }
+
+      // Redirect to the search results page with the query parameter
+      window.location.href = `search-results.html?q=${encodeURIComponent(
+        query
+      )}`;
+    });
+
+    // Handle "Enter" key press for search
+    searchInput.addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+        const query = searchInput.value.trim();
+        if (!query) {
+          // If the input is empty, show error message and prevent search
+          document.getElementById("search-error-message").style.display =
+            "block";
+          return;
+        }
+
+        // Redirect to the search results page with the query parameter
+        window.location.href = `search-results.html?q=${encodeURIComponent(
+          query
+        )}`;
+      }
+    });
+  }
+
+  // Apply search functionality to desktop and mobile search bars
+  handleSearch("desktop-search-input", "desktop-search-button");
+  handleSearch("mobile-search-input", "mobile-search-button");
+
+  // Get the query parameter from the URL when the search results page loads
   const urlParams = new URLSearchParams(window.location.search);
   const query = urlParams.get("q");
 
-  // If no query is provided, display a message and exit
+  const searchMessage = document.getElementById("search-message");
+  const productGrid = document.getElementById("product-list");
+  const noResultsMessage = document.getElementById("no-results-message");
+
+  // Show message if no search query is provided
   if (!query) {
-    document.getElementById("search-message").innerHTML =
-      "<p>No search query provided.</p>";
-    document.getElementById("product-list").innerHTML =
-      "<p>Please enter a search term in the search bar.</p>";
-    return; // Exit here if no query
+    searchMessage.innerHTML = "<p>Please enter a search term.</p>";
+    noResultsMessage.style.display = "block"; // Show no results message
+    return; // Exit the function
   }
 
-  // Display a message with the search term
-  const searchMessage = document.getElementById("search-message");
+  // Display the search term
   searchMessage.innerHTML = `<p>Showing results for "<strong>${query}</strong>"</p>`;
 
-  // Sample products data (you should dynamically load this from a database or API in a real scenario)
+  // Sample product data (this can be dynamic or fetched from an API)
   const products = [
     {
       id: 1,
@@ -69,86 +115,42 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   ];
 
-  // Filter products based on the query (case-insensitive)
+  // Filter products based on search query
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(query.toLowerCase())
   );
 
-  // Get the product grid element
-  const productGrid = document.getElementById("product-list");
-
-  // If there are no matching products
+  // Handle case where no products match the search query
   if (filteredProducts.length === 0) {
-    document.getElementById("no-results-message").style.display = "block";
-    productGrid.innerHTML = "<p>No products found for your search.</p>";
-    return;
+    noResultsMessage.style.display = "block"; // Show no results message
+    productGrid.innerHTML = "";
+    return; // Exit the function
   }
 
-  // Hide the "No results" message if products are found
-  document.getElementById("no-results-message").style.display = "none";
+  // Hide the "No Results" message if products are found
+  noResultsMessage.style.display = "none";
 
-  // Render products dynamically
+  // Dynamically display the filtered products
   filteredProducts.forEach((product) => {
     const productHTML = `
-          <div class="product-card" data-id="${product.id}">
-              <img src="${product.image}" alt="${product.name}" />
-              <h3>${product.name}</h3>
-              <p>Price: $${product.price.toFixed(2)}</p>
-          </div>
+        <div class="product-card" data-id="${product.id}">
+          <img src="${product.image}" alt="${product.name}" />
+          <h3>${product.name}</h3>
+          <p>Price: $${product.price.toFixed(2)}</p>
+        </div>
       `;
     productGrid.innerHTML += productHTML;
   });
 
-  // Make the entire product card clickable
+  // Make product cards clickable to redirect to a product detail page
   document.querySelectorAll(".product-card").forEach((card) => {
     card.addEventListener("click", (e) => {
       const productId = e.currentTarget.getAttribute("data-id");
-
-      // Redirect to product details page with product ID in the query string
       window.location.href = `product-detail.html?id=${productId}`;
     });
   });
 });
 
-// search
-
-document.addEventListener("DOMContentLoaded", function () {
-  document.body.addEventListener("click", function (event) {
-    if (event.target.id === "search-button") {
-      const searchInput = document.getElementById("search-input");
-      if (!searchInput) return;
-
-      const query = searchInput.value.trim();
-      if (!query) {
-        alert("Please enter a search term.");
-        return;
-      }
-
-      // Redirect to search results page with query as a URL parameter
-      window.location.href = `search-results.html?q=${encodeURIComponent(
-        query
-      )}`;
-    }
-  });
-
-  const searchInput = document.getElementById("search-input");
-  if (searchInput) {
-    searchInput.addEventListener("keypress", function (event) {
-      if (event.key === "Enter") {
-        const query = searchInput.value.trim();
-        if (!query) {
-          alert("Please enter a search term.");
-          return;
-        }
-
-        // Redirect to search results page with query as a URL parameter
-        window.location.href = `search-results.html?q=${encodeURIComponent(
-          query
-        )}`;
-      }
-    });
-  }
-});
 // Open the modal when "Contact Us" button is clicked
 document
   .getElementById("contactUsButton")
@@ -359,3 +361,21 @@ const nav = document.querySelector("nav");
 hamburger.addEventListener("click", () => {
   nav.classList.toggle("active");
 });
+
+// Function to update cart count in navigation (total quantity of items)
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cartCount = document.getElementById("cart-count");
+
+  if (cartCount) {
+    // Calculate total quantity (sum of all product quantities in the cart)
+    const totalQuantity = cart.reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
+    cartCount.innerText = `(${totalQuantity})`; // Update the cart count dynamically
+  }
+}
+
+// Initial cart count update when the page loads
+updateCartCount();

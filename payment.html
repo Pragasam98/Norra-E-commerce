@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Razorpay Payment</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+      }
+      #rzp-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #3399cc;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #rzp-button:hover {
+        background-color: #2879a5;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Make a Payment</h1>
+    <button id="rzp-button">Pay Now</button>
+
+    <script>
+      const options = {
+        key: "rzp_test_wXN4Trx0gv8vzT", // Replace with your Razorpay API Key
+        amount: 50000, // Amount in paise (₹500 = 50000 paise)
+        currency: "INR",
+        name: "Your Company Name",
+        description: "Test Transaction",
+        image: "https://your-logo-url.com/logo.png", // Optional: Your company logo
+        handler: function (response) {
+          alert(
+            "Payment Successful!\nPayment ID: " + response.razorpay_payment_id
+          );
+          console.log(response);
+        },
+        theme: {
+          color: "#3399cc",
+        },
+        prefill: {
+          name: "Customer Name",
+          email: "customer@example.com",
+          contact: "9876543210",
+        },
+        modal: {
+          ondismiss: function () {
+            alert("Payment Cancelled by User.");
+          },
+        },
+      };
+
+      const rzp1 = new Razorpay(options);
+
+      document.getElementById("rzp-button").onclick = function (e) {
+        rzp1.open();
+        e.preventDefault();
+      };
+    </script>
+  </body>
+</html>

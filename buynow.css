@@ -8,7 +8,7 @@
 body {
   font-family: Arial, sans-serif;
   background-color: #f8f9fa;
-  padding-top: 60px; /* Keeps the page below the fixed header */
+  padding-top: 60px;
 }
 
 /* Header with Navigation and Search Bar */
@@ -176,102 +176,119 @@ nav ul li a:hover {
   }
 }
 
+/* Overall Container */
+/* Main container for the entire page */
 .container {
-  max-width: 1500px;
-  margin: auto;
-  padding: 20px;
-  text-align: center;
-  min-height: 65vh;
-}
-
-/* Product Grid */
-.product-grid {
   display: flex;
-  gap: 20px; /* Consistent gap */
-  flex-wrap: wrap;
-  justify-content: flex-start; /* Adjust alignment if needed */
-  padding-top: 20px;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 20px;
 }
 
-/* Product Card */
-.product-card {
-  background: #fff;
+/* Left side: Address form */
+.address-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 20px auto;
+  width: 70%;
+}
+
+.section-heading {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.address-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  background: #f9f9f9;
+  padding: 20px;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 20px; /* Increased padding for normal view */
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  flex: 1 1 calc(25% - 20px); /* 4 cards per row with 20px gap */
-  max-width: calc(25% - 20px); /* Ensure consistent width */
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.product-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-}
-
-.product-card img {
+.address-grid input {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 5px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.product-card h3 {
-  margin-top: 15px;
-  font-size: 18px;
-}
-
-.product-card p {
-  color: #666;
-  margin: 10px 0;
-  font-size: 14px;
-}
-
-.product-card button {
-  padding: 10px 20px;
-  background-color: #333;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.product-card button:hover {
-  background-color: #555;
+.address-grid label {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  display: block;
 }
 
 .error-message {
+  font-size: 0.8rem;
   color: red;
-  font-size: 14px;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .product-card {
-    flex: 1 1 calc(50% - 20px); /* 2 cards per row */
-    max-width: calc(
-      50% - 20px
-    ); /* Ensure consistent width for 2 cards per row */
-    padding: 15px; /* Adjust padding for medium screens */
-  }
+.left-grid,
+.right-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
+/* Right side: Cart summary */
+.cart-summary {
+  flex: 3; /* 30% of the width */
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* Cart summary section style */
+.cart-summary h2 {
+  margin-top: 0;
+  font-size: 22px;
+}
+
+.cart-summary p {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+/* Buy Now Button */
+.buy-now-button {
+  width: 100%;
+  padding: 14px;
+  background-color: #333; /* Green color */
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px; /* Space above the button */
+}
+
+.buy-now-button:hover {
+  background-color: #292929; /* Darker green on hover */
+}
+
+/* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
-  .product-card {
-    flex: 1 1 100%; /* 1 card per row */
-    max-width: 100%; /* Ensure full width for 1 card */
-    padding: 10px; /* Adjust padding for smaller screens */
+  .address-grid {
+    display: flex; /* Use flex instead of grid */
+    flex-direction: column; /* Stack the fields vertically */
+    gap: 20px; /* Adjust spacing */
   }
-}
 
-@media (max-width: 576px) {
-  .product-card {
-    flex: 1 1 100%; /* 1 card per row */
-    max-width: 100%; /* Ensure full width for 1 card */
-    padding: 10px; /* Adjust padding for mobile screens */
+  .container {
+    display: flex;
+    flex-direction: column; /* Stack the two sections on smaller screens */
+  }
+
+  .buy-now-button {
+    font-size: 16px;
   }
 }
 
@@ -373,6 +390,63 @@ button[type="submit"]:hover {
   display: none;
 }
 
+/* Responsive Design for Mobile */
+@media screen and (max-width: 768px) {
+  .modal-content {
+    width: 90%; /* Modal width 90% on smaller screens */
+    padding: 15px;
+    max-height: 80%; /* Reduce max-height to make the modal more compact */
+    overflow-y: auto; /* Enable scrolling inside the modal if needed */
+  }
+
+  .grid-container {
+    grid-template-columns: 1fr; /* Stack form fields vertically on mobile */
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px; /* Slightly larger text input fields */
+  }
+
+  button[type="submit"] {
+    padding: 12px; /* Increase padding for easier clicking */
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+}
+
+/* Small Screen Adjustments */
+@media screen and (max-width: 480px) {
+  .modal-content {
+    width: 95%; /* Further reduce width on very small screens */
+    padding: 10px;
+    max-height: 70%; /* Reduce height further on very small screens */
+  }
+
+  button[type="submit"] {
+    font-size: 16px; /* Adjust button font size for small screens */
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 18px; /* Reduce header size */
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 12px; /* Slightly more padding for better touch experience */
+    font-size: 14px; /* Adjust font size */
+  }
+
+  .error-message {
+    font-size: 14px; /* Make error messages a bit larger */
+  }
+}
+
 /* Footer Styling */
 footer {
   background-color: #333;
@@ -454,7 +528,7 @@ footer.fixed {
   z-index: 10;
 }
 
-/* Responsive Footer */
+/* Responsive Footer for Mobile View */
 @media (max-width: 768px) {
   footer {
     flex-direction: column; /* Stack sections vertically */

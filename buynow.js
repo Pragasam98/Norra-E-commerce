@@ -1,102 +1,170 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const products = [
-    {
-      id: 1,
-      name: "Dunk Low Midnight Navy and Varsity Red",
-      price: 10795.0, // Already in INR
-      image:
-        "images/product-images/dunk-low-midnight-navy-and-varsity-red-ib2051-1.jpg",
-    },
-    {
-      id: 2,
-      name: "Air Jordan 1 Mid",
-      price: 136.01 * 82, // 136.01 USD to INR
-      image: "images/product-images/AIR+JORDAN+1+MID 1.png",
-    },
-    {
-      id: 3,
-      name: "LeBron XXII 'Token' EP",
-      price: 217.65 * 82, // 217.65 USD to INR
-      image: "images/product-images/LEBRON+XXII+NRG+EP 1.png",
-    },
-    {
-      id: 4,
-      name: "Nike Air Max Alpha Trainer",
-      price: 100.51 * 82, // 100.51 USD to INR
-      image: "images/product-images/M+AIR+MAX+ALPHA+TRAINER+1.png",
-    },
-    {
-      id: 5,
-      name: "Nike Pegasus Plus",
-      price: 201.08 * 82, // 201.08 USD to INR
-      image: "images/product-images/PEGASUS+PLUS 1.png",
-    },
-    {
-      id: 6,
-      name: "Tatum 2 PF",
-      price: 127.72 * 82, // 127.72 USD to INR
-      image: "images/product-images/JORDAN+TATUM+2+GPX+PF 1.png",
-    },
-    {
-      id: 7,
-      name: "Nike Vaporfly 3",
-      price: 232.58 * 82, // 232.58 USD to INR
-      image: "images/product-images/NIKEZOOMXVAPORFLYNEXT1.png",
-    },
-    {
-      id: 8,
-      name: "JA 1 'Scratch' EP",
-      price: 127.72 * 82, // 127.72 USD to INR
-      image: "images/product-images/JA+1+SCRATCH+EP1.png",
-    },
+  // Function to retrieve cart data and update the summary
+  function updateCartSummary() {
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartItemsList = document.getElementById("cart-items-list");
+    const cartTotal = document.getElementById("cart-total");
+    const shippingAmount = document.getElementById("shipping-amount");
+    const discountAmount = document.getElementById("discount-amount");
+    const finalAmount = document.getElementById("final-amount");
+
+    // If there are no items in the cart, display a message
+    if (cartItems.length === 0) {
+      cartItemsList.innerHTML = "<p>Your cart is empty.</p>";
+      cartTotal.innerText = "$0.00";
+      shippingAmount.innerText = "$0.00";
+      discountAmount.innerText = "$0.00";
+      finalAmount.innerText = "$0.00";
+      return;
+    }
+
+    // Generate the HTML for each cart item
+    let totalAmount = 0;
+    cartItemsList.innerHTML = ""; // Clear any previous cart content
+    cartItems.forEach((item) => {
+      const itemHTML = `
+            <div class="cart-item">
+              <h4>${item.name}</h4>
+              <p>Size: ${item.size}</p>
+              <p>Price: ₹${item.price.toFixed(2)} x ${item.quantity} = ₹${(
+        item.price * item.quantity
+      ).toFixed(2)}</p>
+            </div>
+          `;
+      cartItemsList.innerHTML += itemHTML;
+      totalAmount += item.price * item.quantity;
+    });
+
+    // Assuming shipping is a fixed amount (customizable) and discount is dynamic
+    const shipping = 100.0; // Example fixed shipping cost
+    const discount = 50.0; // Example fixed discount
+
+    // Update amounts
+    cartTotal.innerText = `₹${totalAmount.toFixed(2)}`;
+    shippingAmount.innerText = `₹${shipping.toFixed(2)}`;
+    discountAmount.innerText = `₹${discount.toFixed(2)}`;
+    finalAmount.innerText = `₹${(totalAmount + shipping - discount).toFixed(
+      2
+    )}`;
+  }
+
+  // Call the function to update the cart summary
+  updateCartSummary();
+
+  const buyNowButton = document.getElementById("buy-now-button");
+
+  // Function to validate the form fields
+  // Function to validate an address field
+  function validateAddressField(fieldId, errorId, errorMessage) {
+    const field = document.getElementById(fieldId);
+    const errorElement = document.getElementById(errorId);
+
+    if (!field.value.trim()) {
+      errorElement.innerText = errorMessage; // Display error
+      errorElement.style.display = "block"; // Ensure it's visible
+      field.focus(); // Focus on the first invalid field
+      return false; // Stop further validation
+    }
+
+    errorElement.innerText = ""; // Clear error message
+    errorElement.style.display = "none"; // Hide error
+    return true;
+  }
+
+  // Function to validate pincode
+  function validatePincode(fieldId, errorId) {
+    const pincode = document.getElementById(fieldId).value.trim();
+    const errorElement = document.getElementById(errorId);
+
+    if (!pincode || pincode.length !== 6 || isNaN(pincode)) {
+      errorElement.innerText = "Pincode must be 6 digits.";
+      errorElement.style.display = "block"; // Ensure it's visible
+      document.getElementById(fieldId).focus(); // Focus on invalid field
+      return false;
+    }
+
+    errorElement.innerText = ""; // Clear error message
+    errorElement.style.display = "none"; // Hide error
+    return true;
+  }
+
+  // Handle Buy Now button click
+  buyNowButton.addEventListener("click", function (e) {
+    e.preventDefault(); // Prevent form submission
+
+    // Validate fields in order, stop after the first error
+    if (
+      !validateAddressField("homeStreet", "street-error", "Street is required.")
+    )
+      return;
+    if (!validateAddressField("homeCity", "city-error", "City is required."))
+      return;
+    if (!validateAddressField("homeState", "state-error", "State is required."))
+      return;
+    if (!validatePincode("homePincode", "pincode-error")) return;
+
+    if (
+      !validateAddressField(
+        "billingStreet",
+        "billing-street-error",
+        "Billing street is required."
+      )
+    )
+      return;
+    if (
+      !validateAddressField(
+        "billingCity",
+        "billing-city-error",
+        "Billing city is required."
+      )
+    )
+      return;
+    if (
+      !validateAddressField(
+        "billingState",
+        "billing-state-error",
+        "Billing state is required."
+      )
+    )
+      return;
+    if (!validatePincode("billingPincode", "billing-pincode-error")) return;
+
+    // If no errors, save data to localStorage and redirect
+    const formData = {
+      homeStreet: document.getElementById("homeStreet").value.trim(),
+      homeCity: document.getElementById("homeCity").value.trim(),
+      homeState: document.getElementById("homeState").value.trim(),
+      homePincode: document.getElementById("homePincode").value.trim(),
+      billingStreet: document.getElementById("billingStreet").value.trim(),
+      billingCity: document.getElementById("billingCity").value.trim(),
+      billingState: document.getElementById("billingState").value.trim(),
+      billingPincode: document.getElementById("billingPincode").value.trim(),
+    };
+
+    localStorage.setItem("addressData", JSON.stringify(formData));
+    window.location.href = "checkout.html";
+  });
+
+  // Add event listeners to clear error messages while typing
+  const fields = [
+    { fieldId: "homeStreet", errorId: "street-error" },
+    { fieldId: "homeCity", errorId: "city-error" },
+    { fieldId: "homeState", errorId: "state-error" },
+    { fieldId: "homePincode", errorId: "pincode-error" },
+    { fieldId: "billingStreet", errorId: "billing-street-error" },
+    { fieldId: "billingCity", errorId: "billing-city-error" },
+    { fieldId: "billingState", errorId: "billing-state-error" },
+    { fieldId: "billingPincode", errorId: "billing-pincode-error" },
   ];
 
-  const productGrid = document.getElementById("product-grid");
-
-  // Render products dynamically
-  products.forEach((product) => {
-    const productHTML = `
-      <div class="product-card" data-id="${product.id}">
-        <img src="${product.image}" alt="${product.name}" />
-        <h3>${product.name}</h3>
-        <p>Price: ₹${product.price.toFixed(2)}</p>
-      </div>
-    `;
-    productGrid.innerHTML += productHTML;
+  fields.forEach((field) => {
+    document
+      .getElementById(field.fieldId)
+      .addEventListener("input", function () {
+        document.getElementById(field.errorId).innerText = "";
+        document.getElementById(field.errorId).style.display = "none";
+      });
   });
-
-  // Make the entire product card clickable
-  document.querySelectorAll(".product-card").forEach((card) => {
-    card.addEventListener("click", (e) => {
-      const productId = e.currentTarget.getAttribute("data-id");
-
-      // Redirect to product details page with product ID in the query string
-      window.location.href = `product-detail.html?id=${productId}`;
-    });
-  });
-
-  // Handle "Add to Cart" functionality
-  document.querySelectorAll(".add-to-cart").forEach((button) => {
-    button.addEventListener("click", (e) => {
-      const id = e.target.getAttribute("data-id");
-      const product = products.find((p) => p.id == id);
-
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      const existingItem = cart.find((item) => item.id == product.id);
-
-      if (existingItem) {
-        existingItem.quantity++; // If the product already exists, increase the quantity
-      } else {
-        cart.push({ ...product, quantity: 1 }); // Add new product to the cart with quantity 1
-      }
-
-      localStorage.setItem("cart", JSON.stringify(cart)); // Save the updated cart back to localStorage
-
-      // Update the cart count in the navigation bar across pages
-      updateCartCount();
-    });
-  });
-
   // Function to update cart count in navigation (total quantity of items)
   function updateCartCount() {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -114,7 +182,92 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Initial cart count update when the page loads
   updateCartCount();
+
+  // Search Functionality
+  document.addEventListener("DOMContentLoaded", function () {
+    // Function to handle the search operation
+    function handleSearch(inputId, buttonId) {
+      const searchInput = document.getElementById(inputId);
+      const searchButton = document.getElementById(buttonId);
+
+      if (!searchInput || !searchButton) return;
+
+      // Click event listener for search button
+      searchButton.addEventListener("click", function () {
+        const query = searchInput.value.trim();
+        if (!query) {
+          alert("Please enter a search term.");
+          return;
+        }
+
+        // Redirect to search results page with query as a URL parameter
+        window.location.href = `search-results.html?q=${encodeURIComponent(
+          query
+        )}`;
+      });
+
+      // Allow 'Enter' key to trigger the search
+      searchInput.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+          const query = searchInput.value.trim();
+          if (!query) {
+            alert("Please enter a search term.");
+            return;
+          }
+
+          // Redirect to search results page with query as a URL parameter
+          window.location.href = `search-results.html?q=${encodeURIComponent(
+            query
+          )}`;
+        }
+      });
+    }
+
+    // Handle search functionality for both desktop and mobile
+    handleSearch("mobile-search-input", "mobile-search-button");
+    handleSearch("desktop-search-input", "desktop-search-button");
+  });
+
+  // Hamburger Menu
+  const hamburger = document.querySelector(".hamburger");
+  const nav = document.querySelector("nav");
+
+  hamburger.addEventListener("click", () => {
+    nav.classList.toggle("active");
+  });
+
+  // Modal Functions
+  document
+    .getElementById("contactUsButton")
+    .addEventListener("click", function () {
+      document.getElementById("contactModal").style.display = "block";
+    });
+
+  // Close the modal when the user clicks the close button
+  document
+    .getElementById("closeContactModal")
+    .addEventListener("click", function () {
+      document.getElementById("contactModal").style.display = "none";
+    });
 });
+
+// Function to update cart count in navigation (total quantity of items)
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cartCount = document.getElementById("cart-count");
+
+  if (cartCount) {
+    // Calculate total quantity (sum of all product quantities in the cart)
+    const totalQuantity = cart.reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
+    cartCount.innerText = `(${totalQuantity})`; // Update the cart count dynamically
+  }
+}
+
+// Initial cart count update when the page loads
+updateCartCount();
 
 // search
 

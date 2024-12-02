@@ -3,12 +3,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
 }
 
 body {
   font-family: Arial, sans-serif;
   background-color: #f8f9fa;
-  padding-top: 60px; /* Keeps the page below the fixed header */
+  padding-top: 60px;
 }
 
 /* Header with Navigation and Search Bar */
@@ -177,101 +178,253 @@ nav ul li a:hover {
 }
 
 .container {
-  max-width: 1500px;
+  position: relative;
+  width: calc(min(90rem, 90%));
+  margin: 0 auto;
+  min-height: 100vh;
+  column-gap: 3rem;
+  padding-block: min(20vh, 3rem);
+}
+/* Center the About Us Section */
+.container > div:first-child {
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  text-align: center; /* Center text alignment */
+  padding-bottom: 40px;
+}
+/* Position Content Inside Slides */
+/* Slide Content */
+.swiper-slide .slide-content {
+  position: absolute;
+  top: 0px; /* Position text at the top */
+  left: 50%; /* Center text horizontally */
+  transform: translateX(-50%); /* Center text horizontally */
+  color: black; /* Set text color to black */
+  text-align: center;
+  width: 90%; /* Adjust width for better alignment */
+  padding-top: 30px;
+}
+
+.swiper-slide h2 {
+  font-size: 1.5rem; /* Adjust font size for better visibility */
+  margin-bottom: 10px;
+  color: black; /* Set heading color to black */
+}
+
+.swiper-slide p {
+  font-size: 1rem; /* Adjust font size for paragraph */
+  color: black; /* Set paragraph color to black */
+}
+/* Ensure Slides Have Relative Position */
+.swiper-slide {
+  position: relative;
+  overflow: hidden; /* Clip overflow */
+}
+
+/* Adjust Content for Active Slide */
+.swiper-slide-active .slide-content {
+  transform: translateX(-50%) scale(1); /* Scale up content slightly */
+  opacity: 1;
+  transition: transform 0.5s ease, opacity 0.3s ease;
+}
+
+.swiper-slide:not(.swiper-slide-active) .slide-content {
+  transform: translateX(-50%) scale(0.9); /* Scale down content slightly */
+  opacity: 0.7;
+}
+
+/* Responsive Swiper Container */
+.swiper {
+  width: 90%; /* Base container width */
+  height: 75vh; /* Base height */
   margin: auto;
+}
+
+.swiper-slide {
+  width: clamp(300px, 60%, 800px); /* Default responsive slide width */
+  height: 60%; /* Default height */
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Swiper Pagination */
+.swiper-pagination-bullet {
+  background: #ddd; /* Light gray for inactive bullets */
+  opacity: 0.7;
+}
+
+.swiper-pagination-bullet-active {
+  background: #005baa; /* Highlight active bullet */
+  opacity: 1;
+}
+
+/* Background Images */
+.swiper-slide--one {
+  background: url("https://img.freepik.com/premium-photo/cartoon-ceo-3d-journey-success_1029476-256849.jpg?w=360")
+    no-repeat center/cover;
+}
+.swiper-slide--two {
+  background: url("https://img.freepik.com/premium-photo/cartoon-ceo-3d-journey-success_1029476-256849.jpg?w=360")
+    no-repeat center/cover;
+}
+.swiper-slide--three {
+  background: url("https://img.freepik.com/premium-photo/cartoon-ceo-3d-journey-success_1029476-256849.jpg?w=360")
+    no-repeat center/cover;
+}
+.swiper-slide--four {
+  background: url("https://img.freepik.com/premium-photo/cartoon-ceo-3d-journey-success_1029476-256849.jpg?w=360")
+    no-repeat center/cover;
+}
+.swiper-slide--five {
+  background: url("https://img.freepik.com/premium-photo/cartoon-ceo-3d-journey-success_1029476-256849.jpg?w=360")
+    no-repeat center/cover;
+}
+
+.swiper-3d .swiper-slide-shadow-left,
+.swiper-3d .swiper-slide-shadow-right {
+  background-image: none;
+}
+
+/* Media Queries */
+
+/* For tablets and mobile (screens smaller than 768px) */
+@media (max-width: 768px) {
+  .swiper {
+    width: 100%; /* Full width of the container */
+    height: 50vh; /* Adjust the height to 50% of the viewport height */
+  }
+
+  .swiper-slide {
+    width: 100%; /* Set the slide width to 100% of the viewport width */
+    height: 350px; /* Set a fixed height for mobile slides */
+    display: flex; /* Use flexbox to align slide content */
+    align-items: flex-start; /* Align content to the top */
+    justify-content: flex-start; /* Align content to the top */
+  }
+
+  .slide-content {
+    position: absolute; /* Make sure the content floats above the image */
+    bottom: 5%; /* Adjust position from the bottom */
+    left: 50%; /* Center the content horizontally */
+    transform: translateX(-50%); /* Center content perfectly */
+    width: 95%; /* Adjust width */
+    padding-top: 20px;
+    color: white; /* Ensure text is visible on images */
+    text-align: center; /* Center text */
+  }
+
+  .swiper-pagination-bullet {
+    background: #ddd;
+    opacity: 0.7;
+  }
+
+  .swiper-pagination-bullet-active {
+    background: #005baa;
+    opacity: 1;
+  }
+}
+
+/* Further Increased height for very small mobile view (<=480px) */
+@media (max-width: 480px) {
+  .swiper {
+    height: 500px; /* Adjust height for very small mobile devices */
+    width: 100%;
+  }
+
+  .swiper-slide {
+    display: flex; /* Keep flexbox for proper alignment */
+    flex-direction: column;
+    align-items: center; /* Center content */
+    justify-content: flex-start; /* Align content to the top */
+    width: 100%;
+  }
+
+  .swiper-slide .slide-content {
+    position: absolute; /* Absolute positioning */
+    top: 10px; /* Adjust to the top */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center perfectly */
+    color: black; /* Set text color to black for contrast */
+    text-align: center; /* Center text */
+    width: 90%; /* Adjust the width for mobile view */
+  }
+
+  .swiper-slide h2 {
+    font-size: 1.5rem; /* Slightly larger font for headings */
+  }
+
+  .swiper-slide p {
+    font-size: 1rem; /* Ensure paragraph is readable */
+  }
+}
+
+/* FAQ Section */
+.faq {
+  margin-top: 50px;
   padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.faq h2 {
   text-align: center;
-  min-height: 65vh;
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #333;
 }
 
-/* Product Grid */
-.product-grid {
-  display: flex;
-  gap: 20px; /* Consistent gap */
-  flex-wrap: wrap;
-  justify-content: flex-start; /* Adjust alignment if needed */
-  padding-top: 20px;
+/* FAQ Item */
+.faq-item {
+  margin-bottom: 15px;
 }
 
-/* Product Card */
-.product-card {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 20px; /* Increased padding for normal view */
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  flex: 1 1 calc(25% - 20px); /* 4 cards per row with 20px gap */
-  max-width: calc(25% - 20px); /* Ensure consistent width */
-}
-
-.product-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-}
-
-.product-card img {
+/* FAQ Question Button */
+.faq-question {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 5px;
-}
-
-.product-card h3 {
-  margin-top: 15px;
-  font-size: 18px;
-}
-
-.product-card p {
-  color: #666;
-  margin: 10px 0;
-  font-size: 14px;
-}
-
-.product-card button {
-  padding: 10px 20px;
+  text-align: left;
+  padding: 15px;
   background-color: #333;
   color: white;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
-.product-card button:hover {
-  background-color: #555;
+.faq-question:hover {
+  background-color: #333;
 }
 
-.error-message {
-  color: red;
-  font-size: 14px;
-  margin-top: 10px;
+/* FAQ Answer */
+.faq-answer {
+  padding: 10px 15px;
+  background-color: #f1f1f1;
+  display: none;
+  font-size: 16px;
+  color: #555;
+  border-left: 3px solid #333;
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .product-card {
-    flex: 1 1 calc(50% - 20px); /* 2 cards per row */
-    max-width: calc(
-      50% - 20px
-    ); /* Ensure consistent width for 2 cards per row */
-    padding: 15px; /* Adjust padding for medium screens */
-  }
+.faq-answer p {
+  margin: 0;
 }
 
+/* For mobile view, the text size and padding of the FAQ items can be adjusted */
 @media (max-width: 768px) {
-  .product-card {
-    flex: 1 1 100%; /* 1 card per row */
-    max-width: 100%; /* Ensure full width for 1 card */
-    padding: 10px; /* Adjust padding for smaller screens */
+  .faq h2 {
+    font-size: 28px;
   }
-}
 
-@media (max-width: 576px) {
-  .product-card {
-    flex: 1 1 100%; /* 1 card per row */
-    max-width: 100%; /* Ensure full width for 1 card */
-    padding: 10px; /* Adjust padding for mobile screens */
+  .faq-question {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .faq-answer {
+    font-size: 14px;
+    padding: 8px 12px;
   }
 }
 
@@ -373,6 +526,63 @@ button[type="submit"]:hover {
   display: none;
 }
 
+/* Responsive Design for Mobile */
+@media screen and (max-width: 768px) {
+  .modal-content {
+    width: 90%; /* Modal width 90% on smaller screens */
+    padding: 15px;
+    max-height: 80%; /* Reduce max-height to make the modal more compact */
+    overflow-y: auto; /* Enable scrolling inside the modal if needed */
+  }
+
+  .grid-container {
+    grid-template-columns: 1fr; /* Stack form fields vertically on mobile */
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px; /* Slightly larger text input fields */
+  }
+
+  button[type="submit"] {
+    padding: 12px; /* Increase padding for easier clicking */
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+}
+
+/* Small Screen Adjustments */
+@media screen and (max-width: 480px) {
+  .modal-content {
+    width: 95%; /* Further reduce width on very small screens */
+    padding: 10px;
+    max-height: 70%; /* Reduce height further on very small screens */
+  }
+
+  button[type="submit"] {
+    font-size: 16px; /* Adjust button font size for small screens */
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 18px; /* Reduce header size */
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 12px; /* Slightly more padding for better touch experience */
+    font-size: 14px; /* Adjust font size */
+  }
+
+  .error-message {
+    font-size: 14px; /* Make error messages a bit larger */
+  }
+}
+
 /* Footer Styling */
 footer {
   background-color: #333;
@@ -454,7 +664,7 @@ footer.fixed {
   z-index: 10;
 }
 
-/* Responsive Footer */
+/* Responsive Footer for Mobile View */
 @media (max-width: 768px) {
   footer {
     flex-direction: column; /* Stack sections vertically */

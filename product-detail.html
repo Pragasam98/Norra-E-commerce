@@ -22,23 +22,36 @@
           <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="products.html">Shop</a></li>
-            <li><a href="#">About</a></li>
+            <li><a href="about.html">About</a></li>
             <li>
-              <a id="contactUsButton" class="contact-us-btn"> Contact Us </a>
+              <a href="#" id="contactUsButton" class="contact-us-btn"
+                >Contact Us</a
+              >
             </li>
             <li>
               <a href="cart.html">Cart <span id="cart-count">(0)</span></a>
             </li>
           </ul>
+
+          <!-- Search Bar (Mobile Search Bar Appears Here) -->
+          <div class="search-bar mobile-search-bar">
+            <input
+              type="text"
+              id="mobile-search-input"
+              placeholder="Search for products..."
+            />
+            <button id="mobile-search-button">Search</button>
+          </div>
         </nav>
-        <!-- Search Bar -->
-        <div class="search-bar">
+
+        <!-- Search Bar for Desktop -->
+        <div class="search-bar desktop-search-bar">
           <input
             type="text"
-            id="search-input"
+            id="desktop-search-input"
             placeholder="Search for products..."
           />
-          <button id="search-button">Search</button>
+          <button id="desktop-search-button">Search</button>
         </div>
       </div>
     </header>
@@ -52,7 +65,7 @@
 
       <div id="product-info" class="product-info">
         <h1 id="product-name">Product Name</h1>
-        <p id="product-price">$0.00</p>
+        <p id="product-price">₹0.00</p>
 
         <div id="product-sizes" class="size-container"></div>
 

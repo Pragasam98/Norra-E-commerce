@@ -35,14 +35,64 @@ header h1 {
   font-size: 28px;
 }
 
-/* Navigation and Search Bar Container */
+/* Default Search Bar Styles */
+.search-bar {
+  display: flex; /* Ensure the search bar is visible by default */
+  align-items: center;
+  background-color: #444;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-left: 10px;
+}
+
+.search-bar input[type="text"] {
+  padding: 8px;
+  border: none;
+  outline: none;
+  width: 200px;
+  color: #333;
+  font-size: 14px;
+}
+
+.search-bar button {
+  padding: 8px 12px;
+  background-color: #555;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.search-bar button:hover {
+  background-color: #666;
+}
+
+.mobile-search-bar {
+  display: none;
+}
+/* Hamburger Menu Styles */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+}
+
+/* Navigation Menu */
 .nav-search-container {
   display: flex;
   align-items: center;
-  justify-content: flex-end; /* Aligns everything to the right */
+  justify-content: flex-end;
   width: 100%;
 }
 
+/* Navigation Links (Desktop) */
 nav ul {
   list-style: none;
   display: flex;
@@ -60,76 +110,25 @@ nav ul li a:hover {
   border-radius: 4px;
 }
 
-/* Search Bar Styling */
-.search-bar {
-  display: flex;
-  align-items: center;
-  background-color: #444;
-  border-radius: 4px;
-  overflow: hidden;
-  margin-left: 10px;
-}
-
-.search-bar input[type="text"] {
-  padding: 8px;
-  border: none;
-  outline: none;
-  width: 200px;
-  color: #333;
-}
-
-.search-bar button {
-  padding: 8px;
-  background-color: #555;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-.search-bar button:hover {
-  background-color: #666;
-}
-
-/* Hamburger Icon Styling */
-.hamburger {
-  display: none; /* Hidden by default */
-  flex-direction: column;
-  justify-content: space-between;
-  width: 25px;
-  height: 20px;
-  cursor: pointer;
-}
-
-.hamburger div {
-  background-color: #fff;
-  height: 4px;
-  width: 100%;
-  border-radius: 2px;
-}
-
-/* Media Query for Mobile */
+/* Mobile Styles */
 @media (max-width: 768px) {
-  /* Make the header slightly bigger */
-  header {
-    padding: 21px 15px; /* Increased padding */
+  /* Hide Desktop Search Bar */
+  .desktop-search-bar {
+    display: none;
   }
 
-  header h1 {
-    font-size: 24px; /* Increased font size for the header title */
-  }
-
-  /* Show hamburger on mobile */
+  /* Hamburger Menu Display */
   .hamburger {
-    display: flex; /* Show hamburger icon */
+    display: flex;
   }
 
-  /* Navigation Styles */
+  /* Navigation Links */
   nav {
     display: none;
     flex-direction: column;
     background-color: #333;
     position: absolute;
-    top: 70px; /* Adjusted top positioning to fit the larger header */
+    top: 60px;
     right: 0;
     width: 100%;
     z-index: 1000;
@@ -137,7 +136,7 @@ nav ul li a:hover {
   }
 
   nav.active {
-    display: flex; /* Show navigation when active */
+    display: flex; /* Show menu when active */
   }
 
   nav ul {
@@ -157,13 +156,19 @@ nav ul li a:hover {
     border-bottom: 1px solid #444;
   }
 
-  nav ul li a:hover {
-    background-color: #555;
+  /* Search Bar Inside Hamburger */
+  .mobile-search-bar {
+    display: none; /* Hide by default */
+    margin: 10px auto; /* Center in menu */
+    width: 90%;
   }
 
-  /* Hide Search Bar on Mobile */
-  .search-bar {
-    display: none;
+  nav.active .mobile-search-bar {
+    display: flex; /* Show search bar in hamburger when menu is active */
+  }
+
+  .search-bar input[type="text"] {
+    width: 100%;
   }
 }
 
@@ -551,6 +556,9 @@ footer {
     margin-top: 20px;
   }
 
+  .size-container {
+    padding-bottom: 10px;
+  }
   .thumbnail-container {
     justify-content: center;
     margin-top: 10px;

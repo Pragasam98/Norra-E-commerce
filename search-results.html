@@ -22,23 +22,36 @@
           <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="products.html">Shop</a></li>
-            <li><a href="#">About</a></li>
+            <li><a href="about.html">About</a></li>
             <li>
-              <a id="contactUsButton" class="contact-us-btn"> Contact Us </a>
+              <a href="#" id="contactUsButton" class="contact-us-btn"
+                >Contact Us</a
+              >
             </li>
             <li>
               <a href="cart.html">Cart <span id="cart-count">(0)</span></a>
             </li>
           </ul>
+
+          <!-- Search Bar (Mobile Search Bar Appears Here) -->
+          <div class="search-bar mobile-search-bar">
+            <input
+              type="text"
+              id="mobile-search-input"
+              placeholder="Search for products..."
+            />
+            <button id="mobile-search-button">Search</button>
+          </div>
         </nav>
-        <!-- Search Bar -->
-        <div class="search-bar">
+
+        <!-- Search Bar for Desktop -->
+        <div class="search-bar desktop-search-bar">
           <input
             type="text"
-            id="search-input"
+            id="desktop-search-input"
             placeholder="Search for products..."
           />
-          <button id="search-button">Search</button>
+          <button id="desktop-search-button">Search</button>
         </div>
       </div>
     </header>
@@ -48,20 +61,38 @@
         <div class="container">
           <h1>Search Results</h1>
 
+          <!-- Error message for empty search term (if needed) -->
+          <div
+            id="search-error-message"
+            class="error-message"
+            style="display: none"
+          >
+            <!-- Error message will be displayed here -->
+            <p>Please enter a search term.</p>
+          </div>
+
+          <!-- Search Term Message -->
           <div class="search-message" id="search-message">
             <!-- Message will be populated by JS -->
           </div>
 
+          <!-- Product Grid -->
           <div class="product-grid" id="product-list">
             <!-- Products will be dynamically added here -->
           </div>
 
-          <div class="no-results-message" id="no-results-message">
+          <!-- No Results Message -->
+          <div
+            class="no-results-message"
+            id="no-results-message"
+            style="display: none"
+          >
             <!-- No results message -->
             <p>No products found for your search.</p>
           </div>
         </div>
       </div>
+
       <!-- Contact Us Modal -->
       <div id="contactModal" class="modal">
         <div class="modal-content">

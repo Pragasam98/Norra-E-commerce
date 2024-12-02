@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Products - Norra</title>
-    <link rel="stylesheet" href="products.css" />
+    <title>Checkout Page</title>
+    <link rel="stylesheet" href="checkout.css" />
+    <!-- Assuming you have a styles.css for your custom styles -->
   </head>
   <body>
-    <!-- Header Section -->
     <header>
       <h1>Norra</h1>
       <div class="nav-search-container">
@@ -55,12 +55,64 @@
         </div>
       </div>
     </header>
-    <!-- Product List Section -->
-    <section class="product-list">
+
+    <section class="checkout">
       <div class="container">
-        <h1>Our Products</h1>
-        <div class="product-grid" id="product-grid">
-          <!-- Products will be dynamically generated here -->
+        <h1>Your Checkout</h1>
+
+        <!-- Address and Cart Summary Section (Stacked) -->
+        <div class="checkout-content">
+          <!-- Left Side: Cart Items (Top) -->
+          <div class="checkout-items">
+            <h2>Cart Items</h2>
+            <div id="cart-items-list">
+              <!-- Cart items will be dynamically inserted here -->
+              <!-- Example of a cart item -->
+              <!-- <div class="cart-item">
+                <p>Item Name - Quantity: X - Price: $X.XX</p>
+              </div> -->
+            </div>
+          </div>
+
+          <!-- Right Side: Address Information and Summary -->
+          <div class="checkout-right">
+            <!-- Shipping Address (Top) -->
+            <div class="checkout-address">
+              <h2>Shipping Address</h2>
+              <p>
+                <strong>Street:</strong>
+                <span id="homeStreet-address">Loading...</span>
+              </p>
+              <p>
+                <strong>City:</strong>
+                <span id="homeCity-address">Loading...</span>
+              </p>
+              <p>
+                <strong>State:</strong>
+                <span id="homeState-address">Loading...</span>
+              </p>
+              <p>
+                <strong>Pincode:</strong>
+                <span id="homePincode-address">Loading...</span>
+              </p>
+            </div>
+
+            <!-- Cart Summary (Bottom) -->
+            <div class="checkout-summary">
+              <h2>Summary</h2>
+              <p>Product Amount: <span id="product-amount">₹0.00</span></p>
+              <p>Discount Amount: <span id="discount-amount">₹0.00</span></p>
+              <h3>
+                <strong
+                  >Total Amount: <span id="total-amount">₹0.00</span></strong
+                >
+              </h3>
+              <!-- Razorpay Payment Button -->
+              <a id="proceedToPayment" class="buy-now-btn">
+                Proceed to Payment
+              </a>
+            </div>
+          </div>
         </div>
       </div>
       <!-- Contact Us Modal -->
@@ -172,7 +224,6 @@
       </div>
     </section>
 
-    <!-- Footer Section -->
     <footer>
       <div class="footer-section logo-column">
         <h1 class="footer-logo">Norra</h1>
@@ -200,7 +251,8 @@
         <a href="#">Sale</a>
       </div>
     </footer>
-
-    <script src="products.js"></script>
+    <!-- Razorpay Checkout Script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="checkout.js"></script>
   </body>
 </html>

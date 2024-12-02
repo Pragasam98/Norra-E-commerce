@@ -40,150 +40,7 @@ header h1 {
   font-size: 28px;
 }
 
-/* Hamburger Icon Styling */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-}
-
-.hamburger div {
-  width: 25px;
-  height: 3px;
-  background-color: #fff;
-  transition: all 0.3s ease;
-}
-
-/* Navigation and Search Bar Container */
-.nav-search-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  width: 100%;
-}
-
-/* Navigation Links (Desktop) */
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-}
-
-nav ul li a {
-  color: #fff;
-  text-decoration: none;
-  padding: 5px 10px;
-}
-
-nav ul li a:hover {
-  background-color: #444;
-  border-radius: 4px;
-}
-
-/* Search Bar Styling */
-.search-bar {
-  display: flex;
-  align-items: center;
-  background-color: #444;
-  border-radius: 4px;
-  overflow: hidden;
-  margin-left: 10px;
-}
-
-.search-bar input[type="text"] {
-  padding: 8px;
-  border: none;
-  outline: none;
-  width: 200px;
-  color: #333;
-  font-size: 14px;
-}
-
-.search-bar button {
-  padding: 8px 12px;
-  background-color: #555;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.search-bar button:hover {
-  background-color: #666;
-}
-
-/* Responsive Design */
-/* General Header and Layout */
-header {
-  position: absolute; /* Default position */
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #333;
-  color: #fff;
-  padding: 15px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 1000;
-  transition: all 0.3s ease-in-out; /* Smooth transition */
-}
-
-header.fixed {
-  position: fixed; /* Fixed position when sticky */
-  top: 0; /* Stay at the top */
-  background-color: rgba(51, 51, 51, 0.9); /* Semi-transparent when sticky */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for sticky header */
-  padding: 10px 20px; /* Adjust padding when sticky */
-}
-
-header h1 {
-  font-size: 28px;
-}
-
-/* Hamburger Icon Styling */
-.hamburger {
-  display: none; /* Hidden by default */
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-}
-
-.hamburger div {
-  width: 25px;
-  height: 3px;
-  background-color: #fff;
-  transition: all 0.3s ease;
-}
-
-/* Navigation and Search Bar Container */
-.nav-search-container {
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  width: 100%;
-}
-
-/* Navigation Links */
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-}
-
-nav ul li a {
-  color: #fff;
-  text-decoration: none;
-  padding: 5px 10px;
-}
-
-nav ul li a:hover {
-  background-color: #444;
-  border-radius: 4px;
-}
-
-/* Search Bar Styling */
+/* Default Search Bar Styles */
 .search-bar {
   display: flex; /* Ensure the search bar is visible by default */
   align-items: center;
@@ -215,27 +72,62 @@ nav ul li a:hover {
   background-color: #666;
 }
 
+.mobile-search-bar {
+  display: none;
+}
+/* Hamburger Menu Styles */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+}
+
+/* Navigation Menu */
+.nav-search-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+/* Navigation Links (Desktop) */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 10px;
+}
+
+nav ul li a:hover {
+  background-color: #444;
+  border-radius: 4px;
+}
+
+/* Mobile Styles */
 @media (max-width: 768px) {
-  /* Header Styles */
-  header {
-    padding: 16px 15px;
-  }
-
-  header h1 {
-    font-size: 24px;
-  }
-
-  /* Default Search Bar Hidden on Mobile */
-  .search-bar:not(.mobile-search-bar) {
+  /* Hide Desktop Search Bar */
+  .desktop-search-bar {
     display: none;
   }
 
-  /* Hamburger Menu */
+  /* Hamburger Menu Display */
   .hamburger {
     display: flex;
   }
 
-  /* Navigation Styles */
+  /* Navigation Links */
   nav {
     display: none;
     flex-direction: column;
@@ -249,7 +141,7 @@ nav ul li a:hover {
   }
 
   nav.active {
-    display: flex;
+    display: flex; /* Show menu when active */
   }
 
   nav ul {
@@ -269,41 +161,19 @@ nav ul li a:hover {
     border-bottom: 1px solid #444;
   }
 
-  nav ul li a:hover {
-    background-color: #555;
-  }
-
-  /* Display Mobile Search Bar When Dropdown is Open */
+  /* Search Bar Inside Hamburger */
   .mobile-search-bar {
-    display: flex;
-    align-items: center;
-    background-color: #444;
-    border-radius: 4px;
-    overflow: hidden;
-    margin: 10px auto; /* Center it */
-    padding: 5px;
+    display: none; /* Hide by default */
+    margin: 10px auto; /* Center in menu */
+    width: 90%;
   }
 
-  .mobile-search-bar input[type="text"] {
+  nav.active .mobile-search-bar {
+    display: flex; /* Show search bar in hamburger when menu is active */
+  }
+
+  .search-bar input[type="text"] {
     width: 100%;
-    color: #333;
-    padding: 8px;
-    border: none;
-    outline: none;
-    font-size: 14px;
-  }
-
-  .mobile-search-bar button {
-    padding: 8px 12px;
-    background-color: #555;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-  }
-
-  .mobile-search-bar button:hover {
-    background-color: #666;
   }
 }
 

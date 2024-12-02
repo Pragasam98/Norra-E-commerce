@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       id: 1,
       name: "Dunk Low Midnight Navy and Varsity Red",
-      price: 127.72,
+      price: 127.72 * 82, // Converted to INR
       images: [
         "images/product-images/dunk-low-midnight-navy-and-varsity-red-ib2051-1.jpg",
         "images/product-images/dunk-low-midnight-navy-and-varsity-red-ib2051-2.jpg",
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       id: 2,
       name: "Air Jordan 1 Mid",
-      price: 136.01,
+      price: 136.01 * 82, // Converted to INR
       images: [
         "images/product-images/AIR+JORDAN+1+MID 1.png",
         "images/product-images/AIR+JORDAN+1+MID 2.png",
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       id: 3,
       name: "LeBron XXII 'Token' EP",
-      price: 217.65,
+      price: 217.65 * 82, // Converted to INR
       images: [
         "images/product-images/LEBRON+XXII+NRG+EP 1.png",
         "images/product-images/LEBRON+XXII+NRG+EP 2.png",
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       id: 4,
       name: "Nike Air Max Alpha Trainer",
-      price: 100.51,
+      price: 100.51 * 82, // Converted to INR
       images: [
         "images/product-images/M+AIR+MAX+ALPHA+TRAINER+1.png",
         "images/product-images/M+AIR+MAX+ALPHA+TRAINER+2.png",
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       id: 5,
       name: "Nike Pegasus Plus",
-      price: 201.08,
+      price: 201.08 * 82, // Converted to INR
       images: [
         "images/product-images/PEGASUS+PLUS 1.png",
         "images/product-images/PEGASUS+PLUS 2.png",
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       id: 6,
       name: "Tatum 2 PF",
-      price: 127.72,
+      price: 127.72 * 82, // Converted to INR
       images: [
         "images/product-images/JORDAN+TATUM+2+GPX+PF 1.png",
         "images/product-images/JORDAN+TATUM+2+GPX+PF 2.png",
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       id: 7,
       name: "Nike Vaporfly 3",
-      price: 232.58,
+      price: 232.58 * 82, // Converted to INR
       images: [
         "images/product-images/NIKEZOOMXVAPORFLYNEXT1.png",
         "images/product-images/NIKEZOOMXVAPORFLYNEXT2.png",
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       id: 8,
       name: "JA 1 'Scratch' EP",
-      price: 127.72,
+      price: 127.72 * 82, // Converted to INR
       images: [
         "images/product-images/JA+1+SCRATCH+EP1.png",
         "images/product-images/JA+1+SCRATCH+EP2.png",
@@ -106,6 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
       sizes: ["6", "7", "8", "9", "10", "11"],
     },
   ];
+
   // Get product ID from URL query params (e.g., ?id=1)
   const urlParams = new URLSearchParams(window.location.search);
   const productId = parseInt(urlParams.get("id"));
@@ -126,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("product-name").textContent = product.name;
   document.getElementById(
     "product-price"
-  ).textContent = `$${product.price.toFixed(2)}`;
+  ).textContent = `₹${product.price.toFixed(2)}`; // Display price in INR
 
   // Display main product image
   const mainImageContainer = document.getElementById("main-product-image");
@@ -234,14 +235,19 @@ document.addEventListener("DOMContentLoaded", function () {
   // Update cart count on page load
   updateCartCount();
 });
+
 // search
 
 document.addEventListener("DOMContentLoaded", function () {
-  document.body.addEventListener("click", function (event) {
-    if (event.target.id === "search-button") {
-      const searchInput = document.getElementById("search-input");
-      if (!searchInput) return;
+  // Function to handle the search operation
+  function handleSearch(inputId, buttonId) {
+    const searchInput = document.getElementById(inputId);
+    const searchButton = document.getElementById(buttonId);
 
+    if (!searchInput || !searchButton) return;
+
+    // Click event listener for search button
+    searchButton.addEventListener("click", function () {
       const query = searchInput.value.trim();
       if (!query) {
         alert("Please enter a search term.");
@@ -252,11 +258,9 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = `search-results.html?q=${encodeURIComponent(
         query
       )}`;
-    }
-  });
+    });
 
-  const searchInput = document.getElementById("search-input");
-  if (searchInput) {
+    // Allow 'Enter' key to trigger the search
     searchInput.addEventListener("keypress", function (event) {
       if (event.key === "Enter") {
         const query = searchInput.value.trim();
@@ -272,6 +276,10 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+
+  // Handle search functionality for both desktop and mobile
+  handleSearch("mobile-search-input", "mobile-search-button");
+  handleSearch("desktop-search-input", "desktop-search-button");
 });
 
 const hamburger = document.querySelector(".hamburger");

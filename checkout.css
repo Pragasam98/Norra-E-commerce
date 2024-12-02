@@ -1,4 +1,4 @@
-/* Basic Reset and Styling */
+/* General Reset */
 * {
   margin: 0;
   padding: 0;
@@ -8,7 +8,7 @@
 body {
   font-family: Arial, sans-serif;
   background-color: #f8f9fa;
-  padding-top: 60px; /* Keeps the page below the fixed header */
+  padding-top: 60px;
 }
 
 /* Header with Navigation and Search Bar */
@@ -177,101 +177,94 @@ nav ul li a:hover {
 }
 
 .container {
-  max-width: 1500px;
-  margin: auto;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1,
+h2,
+h3 {
+  color: #333;
+}
+
+.checkout {
+  background-color: #fff;
+  border-radius: 8px;
   padding: 20px;
-  text-align: center;
-  min-height: 65vh;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Product Grid */
-.product-grid {
+.checkout-content {
+  display: grid;
+  grid-template-columns: 70% 30%; /* Cart takes 60%, Address + Summary take 40% */
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.checkout-items {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-right {
   display: flex;
-  gap: 20px; /* Consistent gap */
-  flex-wrap: wrap;
-  justify-content: flex-start; /* Adjust alignment if needed */
-  padding-top: 20px;
+  flex-direction: column;
+  gap: 20px;
 }
 
-/* Product Card */
-.product-card {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 20px; /* Increased padding for normal view */
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  flex: 1 1 calc(25% - 20px); /* 4 cards per row with 20px gap */
-  max-width: calc(25% - 20px); /* Ensure consistent width */
+.checkout-address {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.product-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+.checkout-summary {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.product-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 5px;
+.checkout-address h2,
+.checkout-items h2,
+.checkout-summary h2 {
+  margin-bottom: 15px;
+  color: #444;
 }
 
-.product-card h3 {
-  margin-top: 15px;
-  font-size: 18px;
-}
-
-.product-card p {
-  color: #666;
-  margin: 10px 0;
-  font-size: 14px;
-}
-
-.product-card button {
-  padding: 10px 20px;
+.checkout-summary a.buy-now-btn {
+  display: inline-block;
   background-color: #333;
   color: white;
-  border: none;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: bold;
   border-radius: 5px;
-  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
 }
 
-.product-card button:hover {
-  background-color: #555;
+.checkout-summary a.buy-now-btn:hover {
+  background-color: #292929;
 }
 
-.error-message {
-  color: red;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .product-card {
-    flex: 1 1 calc(50% - 20px); /* 2 cards per row */
-    max-width: calc(
-      50% - 20px
-    ); /* Ensure consistent width for 2 cards per row */
-    padding: 15px; /* Adjust padding for medium screens */
-  }
-}
-
+/* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
-  .product-card {
-    flex: 1 1 100%; /* 1 card per row */
-    max-width: 100%; /* Ensure full width for 1 card */
-    padding: 10px; /* Adjust padding for smaller screens */
+  .checkout-content {
+    grid-template-columns: 1fr; /* Stack sections vertically */
   }
-}
 
-@media (max-width: 576px) {
-  .product-card {
-    flex: 1 1 100%; /* 1 card per row */
-    max-width: 100%; /* Ensure full width for 1 card */
-    padding: 10px; /* Adjust padding for mobile screens */
+  .checkout-right {
+    gap: 20px; /* Space between address and summary */
+  }
+
+  .checkout-summary a.buy-now-btn {
+    width: 100%; /* Make button full width */
+    text-align: center;
   }
 }
 
@@ -345,7 +338,7 @@ textarea {
 
 /* Submit Button Styles */
 button[type="submit"] {
-  background-color: #4caf50;
+  background-color: #333;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -356,7 +349,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #45a049;
+  background-color: #292929;
 }
 
 /* Error Message Styling */
@@ -371,6 +364,63 @@ button[type="submit"]:hover {
   font-size: 16px;
   text-align: center;
   display: none;
+}
+
+/* Responsive Design for Mobile */
+@media screen and (max-width: 768px) {
+  .modal-content {
+    width: 90%; /* Modal width 90% on smaller screens */
+    padding: 15px;
+    max-height: 80%; /* Reduce max-height to make the modal more compact */
+    overflow-y: auto; /* Enable scrolling inside the modal if needed */
+  }
+
+  .grid-container {
+    grid-template-columns: 1fr; /* Stack form fields vertically on mobile */
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px; /* Slightly larger text input fields */
+  }
+
+  button[type="submit"] {
+    padding: 12px; /* Increase padding for easier clicking */
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+}
+
+/* Small Screen Adjustments */
+@media screen and (max-width: 480px) {
+  .modal-content {
+    width: 95%; /* Further reduce width on very small screens */
+    padding: 10px;
+    max-height: 70%; /* Reduce height further on very small screens */
+  }
+
+  button[type="submit"] {
+    font-size: 16px; /* Adjust button font size for small screens */
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 18px; /* Reduce header size */
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 12px; /* Slightly more padding for better touch experience */
+    font-size: 14px; /* Adjust font size */
+  }
+
+  .error-message {
+    font-size: 14px; /* Make error messages a bit larger */
+  }
 }
 
 /* Footer Styling */
@@ -454,7 +504,7 @@ footer.fixed {
   z-index: 10;
 }
 
-/* Responsive Footer */
+/* Responsive Footer for Mobile View */
 @media (max-width: 768px) {
   footer {
     flex-direction: column; /* Stack sections vertically */

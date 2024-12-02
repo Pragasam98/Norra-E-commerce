@@ -1,57 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Get references to cart-related elements
   const cartCount = document.getElementById("cart-count");
   const productList = document.querySelector(".cart-items");
   const cartTotal = document.getElementById("total-amount");
   const productAmount = document.getElementById("product-amount");
   const discountAmount = document.getElementById("discount-amount");
 
-  // Handle "Add to Cart" on the product detail page
-  if (window.location.pathname.includes("product-detail.html")) {
-    const addToCartButton = document.getElementById("add-to-cart");
-    addToCartButton.addEventListener("click", function () {
-      const selectedSize = localStorage.getItem("selectedSize");
-      if (!selectedSize) {
-        alert("Please select a size before adding to the cart.");
-        return;
-      }
-
-      const product = {
-        id: this.getAttribute("data-id"),
-        name: document.querySelector("#product-name").innerText,
-        price: parseFloat(
-          document.querySelector("#product-price").innerText.replace("$", "")
-        ),
-        image: document.querySelector("#main-product-image img").src,
-        size: selectedSize,
-        quantity: 1,
-      };
-      addToCart(product);
-    });
-  }
-
-  // Add items to cart and store in localStorage
-  function addToCart(product) {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const existingProduct = cart.find(
-      (item) => item.id === product.id && item.size === product.size
-    );
-    if (existingProduct) {
-      existingProduct.quantity++;
-    } else {
-      cart.push(product);
-    }
-    localStorage.setItem("cart", JSON.stringify(cart));
-    updateCartCount();
-    alert(
-      `${product.name} (Size: ${product.size}) has been added to your cart!`
-    );
-  }
-
-  // Update the cart display on the cart page
+  // Update cart display on the cart page
   function updateCartDisplay() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    productList.innerHTML = ""; // Clear current cart items
+    productList.innerHTML = ""; // Clear existing items
 
     if (cart.length === 0) {
       productList.innerHTML = "<p>Your cart is empty.</p>";
@@ -66,62 +23,46 @@ document.addEventListener("DOMContentLoaded", function () {
       const cartItemHTML = `
         <div class="cart-item" data-id="${item.id}" data-size="${item.size}">
           <div class="cart-item-left">
-            <div class="cart-item-image-container">
-              <img src="${item.image}" alt="${
+            <img src="${item.image}" alt="${
         item.name
       }" class="cart-item-image" />
-            </div>
             <div class="quantity-control">
               <button class="decrease-quantity" data-id="${
                 item.id
               }" data-size="${item.size}">-</button>
-              <span class="quantity-display" data-id="${item.id}" data-size="${
-        item.size
-      }">${item.quantity}</span>
+              <span class="quantity-display">${item.quantity}</span>
               <button class="increase-quantity" data-id="${
                 item.id
               }" data-size="${item.size}">+</button>
-             
-          </div>
-           <button class="remove-from-cart" data-id="${item.id}" data-size="${
+            </div>
+            <button class="remove-from-cart" data-id="${item.id}" data-size="${
         item.size
       }">Remove</button>
-            </div>
+          </div>
           <div class="cart-item-info">
             <h3>${item.name}</h3>
             <p>Size: ${item.size}</p>
-            <p>Price: $<span class="item-total" data-id="${item.id}">${(
-        item.price * item.quantity
-      ).toFixed(2)}</span></p>
-            <p>Quantity: <span class="quantity-info" data-id="${
-              item.id
-            }" data-size="${item.size}">${item.quantity}</span></p>
+            <p>Price: ₹${(item.price * item.quantity).toFixed(2)}</p>
           </div>
-        </div>
-      `;
+        </div>`;
       productList.innerHTML += cartItemHTML;
     });
 
-    // Calculate total price
     const total = cart.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0
     );
-    const discount = 0; // Placeholder for discount
+    const discount = 0; // Placeholder for discount logic
     const finalAmount = total - discount;
 
-    productAmount.innerText = `$${total.toFixed(2)}`;
-    discountAmount.innerText = `$${discount.toFixed(2)}`;
-    cartTotal.innerText = `$${finalAmount.toFixed(2)}`;
-
-    // Update cart count
+    productAmount.innerText = `₹${total.toFixed(2)}`;
+    discountAmount.innerText = `₹${discount.toFixed(2)}`;
+    cartTotal.innerText = `₹${finalAmount.toFixed(2)}`;
     updateCartCount();
-
-    // Add listeners for cart actions
     addCartListeners(cart);
   }
 
-  // Handle quantity and removal actions
+  // Cart actions (Increase, Decrease, Remove)
   function addCartListeners(cart) {
     document.querySelectorAll(".increase-quantity").forEach((button) => {
       button.addEventListener("click", (e) => {
@@ -163,27 +104,29 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Update the cart count in the navigation bar
+  // Update cart count in navigation
   function updateCartCount() {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
     cartCount.innerText = `(${itemCount})`;
   }
 
-  // Initialize cart display on cart page
-  if (window.location.pathname.includes("cart.html")) {
-    updateCartDisplay();
-  } else {
-    updateCartCount();
-  }
+  // Initialize
+  updateCartDisplay();
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  document.body.addEventListener("click", function (event) {
-    if (event.target.id === "search-button") {
-      const searchInput = document.getElementById("search-input");
-      if (!searchInput) return;
+//search
 
+document.addEventListener("DOMContentLoaded", function () {
+  // Function to handle the search operation
+  function handleSearch(inputId, buttonId) {
+    const searchInput = document.getElementById(inputId);
+    const searchButton = document.getElementById(buttonId);
+
+    if (!searchInput || !searchButton) return;
+
+    // Click event listener for search button
+    searchButton.addEventListener("click", function () {
       const query = searchInput.value.trim();
       if (!query) {
         alert("Please enter a search term.");
@@ -194,11 +137,9 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = `search-results.html?q=${encodeURIComponent(
         query
       )}`;
-    }
-  });
+    });
 
-  const searchInput = document.getElementById("search-input");
-  if (searchInput) {
+    // Allow 'Enter' key to trigger the search
     searchInput.addEventListener("keypress", function (event) {
       if (event.key === "Enter") {
         const query = searchInput.value.trim();
@@ -214,45 +155,14 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+
+  // Handle search functionality for both desktop and mobile
+  handleSearch("mobile-search-input", "mobile-search-button");
+  handleSearch("desktop-search-input", "desktop-search-button");
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  document.body.addEventListener("click", function (event) {
-    if (event.target.id === "search-button") {
-      const searchInput = document.getElementById("search-input");
-      if (!searchInput) return;
+//hamburger
 
-      const query = searchInput.value.trim();
-      if (!query) {
-        alert("Please enter a search term.");
-        return;
-      }
-
-      // Redirect to search results page with query as a URL parameter
-      window.location.href = `search-results.html?q=${encodeURIComponent(
-        query
-      )}`;
-    }
-  });
-
-  const searchInput = document.getElementById("search-input");
-  if (searchInput) {
-    searchInput.addEventListener("keypress", function (event) {
-      if (event.key === "Enter") {
-        const query = searchInput.value.trim();
-        if (!query) {
-          alert("Please enter a search term.");
-          return;
-        }
-
-        // Redirect to search results page with query as a URL parameter
-        window.location.href = `search-results.html?q=${encodeURIComponent(
-          query
-        )}`;
-      }
-    });
-  }
-});
 const hamburger = document.querySelector(".hamburger");
 const nav = document.querySelector("nav");
 
@@ -461,4 +371,8 @@ document.getElementById("dob").addEventListener("input", function () {
 });
 document.getElementById("message").addEventListener("input", function () {
   hideError("message");
+});
+
+document.getElementById("buy-now-btn").addEventListener("click", function () {
+  window.location.href = "buynow.html"; // Redirect to buynow.html
 });

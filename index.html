@@ -30,23 +30,36 @@
           <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="products.html">Shop</a></li>
-            <li><a href="#">About</a></li>
+            <li><a href="about.html">About</a></li>
             <li>
-              <a id="contactUsButton" class="contact-us-btn"> Contact Us </a>
+              <a href="#" id="contactUsButton" class="contact-us-btn"
+                >Contact Us</a
+              >
             </li>
             <li>
               <a href="cart.html">Cart <span id="cart-count">(0)</span></a>
             </li>
           </ul>
+
+          <!-- Search Bar (Mobile Search Bar Appears Here) -->
+          <div class="search-bar mobile-search-bar">
+            <input
+              type="text"
+              id="mobile-search-input"
+              placeholder="Search for products..."
+            />
+            <button id="mobile-search-button">Search</button>
+          </div>
         </nav>
-        <!-- Search Bar -->
-        <div class="search-bar">
+
+        <!-- Search Bar for Desktop -->
+        <div class="search-bar desktop-search-bar">
           <input
             type="text"
-            id="search-input"
+            id="desktop-search-input"
             placeholder="Search for products..."
           />
-          <button id="search-button">Search</button>
+          <button id="desktop-search-button">Search</button>
         </div>
       </div>
     </header>
@@ -114,75 +127,10 @@
       </div>
 
       <!-- Featured Products Section -->
-      <h2>Featured Products</h2>
-      <div class="featured-products">
-        <div class="product-card">
-          <img
-            src="images/product-images/dunk-low-midnight-navy-and-varsity-red-ib2051-1.jpg"
-            alt="Product 1"
-          />
-          <h3>Dunk Low Midnight Navy and Varsity Red</h3>
-          <p>$127.72</p>
-          <button
-            class="add-to-cart"
-            data-id="1"
-            data-name="Dunk Low Midnight Navy and Varsity Red"
-            data-price="127.72"
-            data-image="images/product-images/dunk-low-midnight-navy-and-varsity-red-ib2051-1.jpg"
-          >
-            Add to Cart
-          </button>
-        </div>
-        <div class="product-card">
-          <img
-            src="images/product-images/AIR+JORDAN+1+MID 1.png"
-            alt="Product 2"
-          />
-          <h3>Air Jordan 1 Mid</h3>
-          <p>$217.65</p>
-          <button
-            class="add-to-cart"
-            data-id="2"
-            data-name="Air Jordan 1 Mid"
-            data-price="217.65"
-            data-image="images/product-images/AIR+JORDAN+1+MID 1.png"
-          >
-            Add to Cart
-          </button>
-        </div>
-        <div class="product-card">
-          <img
-            src="images/product-images/LEBRON+XXII+NRG+EP 1.png"
-            alt="Product 3"
-          />
-          <h3>LeBron XXII 'Token' EP</h3>
-          <p>$217.65</p>
-          <button
-            class="add-to-cart"
-            data-id="3"
-            data-name="LeBron XXII 'Token' EP"
-            data-price="217.65"
-            data-image="images/product-images/LEBRON+XXII+NRG+EP 1.png"
-          >
-            Add to Cart
-          </button>
-        </div>
-        <div class="product-card">
-          <img
-            src="images/product-images/M+AIR+MAX+ALPHA+TRAINER+1.png"
-            alt="Product 4"
-          />
-          <h3>Nike Air Max Alpha Trainer</h3>
-          <p>$100.51</p>
-          <button
-            class="add-to-cart"
-            data-id="4"
-            data-name="Nike Air Max Alpha Trainer"
-            data-price="100.51"
-            data-image="images/product-images/M+AIR+MAX+ALPHA+TRAINER+1.png"
-          >
-            Add to Cart
-          </button>
+      <div class="product-list">
+        <h1>Featured Products</h1>
+        <div id="product-grid" class="product-grid">
+          <!-- Product cards will be dynamically inserted here -->
         </div>
       </div>
 

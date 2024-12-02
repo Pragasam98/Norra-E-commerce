@@ -1,143 +1,82 @@
-document.addEventListener("DOMContentLoaded", function () {
-  // Product Slider
-  let slideInterval;
-  let currentSlide = 0;
-  let slides = document.querySelectorAll(".product-image-box");
-  let totalSlides = slides.length;
-
-  function moveSlide(step) {
-    currentSlide = (currentSlide + step + totalSlides) % totalSlides;
-    updateSliderPosition();
-  }
-
-  function updateSliderPosition() {
-    document.querySelector(".slider").style.transform = `translateX(-${
-      currentSlide * 100
-    }%)`;
-  }
-
-  // Function to start the slider (loop)
-  function startSlider() {
-    slideInterval = setInterval(() => moveSlide(1), 3000);
-  }
-
-  // Function to pause the slider (stop the loop)
-  function pauseSlider() {
-    clearInterval(slideInterval);
-  }
-
-  // Function to resume the slider
-  function resumeSlider() {
-    startSlider();
-  }
-
-  // Event listeners to pause and resume the slider on mouse enter/leave
-  document
-    .querySelector(".slider-container")
-    .addEventListener("mouseenter", pauseSlider);
-  document
-    .querySelector(".slider-container")
-    .addEventListener("mouseleave", resumeSlider);
-
-  // Start the slider initially
-  startSlider();
-
-  // Testimonial Carousel
-  var swiper = new Swiper(".testimonial-wrapper", {
-    slidesPerView: 1,
-    slidesPerGroup: 1,
-    spaceBetween: 30,
-    loop: true,
-    speed: 2000,
-    autoplay: true,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
+var swiper = new Swiper(".swiper", {
+  effect: "coverflow", // Use coverflow effect
+  grabCursor: true, // Enable cursor interaction
+  centeredSlides: true, // Center the active slide
+  slidesPerView: 3, // Display 3 slides at a time by default (for large screens)
+  coverflowEffect: {
+    rotate: 0, // No rotation for slides
+    stretch: -50, // Space between slides for side visibility
+    depth: 200, // Depth for a 3D perspective
+    modifier: 1.5, // Amplify the effect
+    slideShadows: true, // Enable slide shadows
+  },
+  loop: true, // Enable infinite loop
+  autoplay: {
+    delay: 3000, // Auto-slide every 3 seconds
+    disableOnInteraction: false, // Continue autoplay after user interaction
+  },
+  pagination: {
+    el: ".swiper-pagination", // Pagination element
+    clickable: true, // Allow clicking on bullets
+  },
+  breakpoints: {
+    // Mobile view (screens up to 480px)
+    480: {
+      slidesPerView: 1, // Only 1 slide visible
+      spaceBetween: 10, // Reduced space between slides
     },
-    breakpoints: {
-      768: { slidesPerView: 3, slidesPerGroup: 1 },
-      480: { slidesPerView: 2, slidesPerGroup: 1 },
+    // Tablet view (screens up to 768px)
+    768: {
+      slidesPerView: 1, // Only 1 slide visible
+      spaceBetween: 10, // Reduced space between slides
     },
-  });
-
-  // Sticky Header
-  const header = document.querySelector("header");
-  const featuredProducts = document.querySelector(".featured-products");
-
-  if (featuredProducts) {
-    // Check if the element exists before using offsetTop
-    const featuredProductsOffset = featuredProducts.offsetTop;
-
-    window.addEventListener("scroll", function () {
-      if (window.scrollY >= featuredProductsOffset) {
-        header.classList.add("fixed");
-      } else {
-        header.classList.remove("fixed");
-      }
-    });
-  }
+    // For larger screens (1024px and up)
+    1024: {
+      slidesPerView: 3, // Show 3 slides per view
+      spaceBetween: 20, // Space between slides
+    },
+  },
+  on: {
+    init: function () {
+      // Randomizing content
+      const names = ["Alice", "Bob", "Charlie", "Diana", "Eve"];
+      const roles = ["CEO", "CTO", "SEO", "CFO", "CRO"];
+      document.querySelectorAll(".slide-content").forEach((content) => {
+        const randomName = names[Math.floor(Math.random() * names.length)];
+        const randomRole = roles[Math.floor(Math.random() * roles.length)];
+        content.querySelector("h2").innerText = randomName;
+        content.querySelector("p").innerText = randomRole;
+      });
+    },
+  },
 });
 
+// FAQ Accordion Toggle
 document.addEventListener("DOMContentLoaded", function () {
-  const products = [
-    {
-      id: 1,
-      name: "Dunk Low Midnight Navy and Varsity Red",
-      price: 10795.0,
-      image:
-        "images/product-images/dunk-low-midnight-navy-and-varsity-red-ib2051-1.jpg",
-      description: "A lightweight running shoe for comfort and performance.",
-    },
-    {
-      id: 2,
-      name: "Air Jordan 1 Mid",
-      price: 13601.0,
-      image: "images/product-images/AIR+JORDAN+1+MID 1.png",
-      description: "Classic style with a low-top design.",
-    },
-    {
-      id: 3,
-      name: "LeBron XXII 'Token' EP",
-      price: 21765.0,
-      image: "images/product-images/LEBRON+XXII+NRG+EP 1.png",
-      description:
-        "Running shoes with great comfort for long-distance running.",
-    },
-    {
-      id: 4,
-      name: "Nike Air Max Alpha Trainer",
-      price: 10051.0,
-      image: "images/product-images/M+AIR+MAX+ALPHA+TRAINER+1.png",
-      description: "Casual shoes with a sporty look for everyday wear.",
-    },
-  ];
+  const faqQuestions = document.querySelectorAll(".faq-question");
 
-  const productGrid = document.getElementById("product-grid");
+  faqQuestions.forEach(function (question) {
+    question.addEventListener("click", function () {
+      const answer = this.nextElementSibling;
 
-  // Loop through products and dynamically add them to the product grid
-  products.forEach((product) => {
-    const productHTML = `
-      <div class="product-card" data-id="${product.id}">
-        <img src="${product.image}" alt="${product.name}" />
-        <h3>${product.name}</h3>
-        <p>₹${product.price.toLocaleString()}</p>
-        <p>${product.description}</p>
-      </div>
-    `;
-    productGrid.innerHTML += productHTML;
-  });
+      // Close all other open answers
+      document.querySelectorAll(".faq-answer").forEach(function (otherAnswer) {
+        if (otherAnswer !== answer) {
+          otherAnswer.style.display = "none";
+        }
+      });
 
-  // Make the entire product card clickable
-  document.querySelectorAll(".product-card").forEach((card) => {
-    card.addEventListener("click", function () {
-      const productId = this.getAttribute("data-id");
-      window.location.href = `product-detail.html?id=${productId}`;
+      // Toggle the display of the clicked answer
+      if (answer.style.display === "block") {
+        answer.style.display = "none";
+      } else {
+        answer.style.display = "block";
+      }
     });
   });
 });
 
 // search
-
 document.addEventListener("DOMContentLoaded", function () {
   // Function to handle the search operation
   function handleSearch(inputId, buttonId) {
@@ -182,13 +121,31 @@ document.addEventListener("DOMContentLoaded", function () {
   handleSearch("desktop-search-input", "desktop-search-button");
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const hamburger = document.querySelector(".hamburger");
-  const nav = document.querySelector("nav");
+// Function to update cart count in navigation (total quantity of items)
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cartCount = document.getElementById("cart-count");
 
-  hamburger.addEventListener("click", () => {
-    nav.classList.toggle("active");
-  });
+  if (cartCount) {
+    // Calculate total quantity (sum of all product quantities in the cart)
+    const totalQuantity = cart.reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
+    cartCount.innerText = `(${totalQuantity})`; // Update the cart count dynamically
+  }
+}
+
+// Initial cart count update when the page loads
+updateCartCount();
+
+//hamburger
+
+const hamburger = document.querySelector(".hamburger");
+const nav = document.querySelector("nav");
+
+hamburger.addEventListener("click", () => {
+  nav.classList.toggle("active");
 });
 
 // Open the modal when "Contact Us" button is clicked
@@ -394,43 +351,3 @@ document.getElementById("dob").addEventListener("input", function () {
 document.getElementById("message").addEventListener("input", function () {
   hideError("message");
 });
-
-// Handle "Add to Cart" functionality
-document.querySelectorAll(".add-to-cart").forEach((button) => {
-  button.addEventListener("click", (e) => {
-    const id = e.target.getAttribute("data-id");
-    const product = products.find((p) => p.id == id);
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const existingItem = cart.find((item) => item.id == product.id);
-
-    if (existingItem) {
-      existingItem.quantity++; // If the product already exists, increase the quantity
-    } else {
-      cart.push({ ...product, quantity: 1 }); // Add new product to the cart with quantity 1
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart)); // Save the updated cart back to localStorage
-
-    // Update the cart count in the navigation bar across pages
-    updateCartCount();
-  });
-});
-
-// Function to update cart count in navigation (total quantity of items)
-function updateCartCount() {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const cartCount = document.getElementById("cart-count");
-
-  if (cartCount) {
-    // Calculate total quantity (sum of all product quantities in the cart)
-    const totalQuantity = cart.reduce(
-      (total, item) => total + item.quantity,
-      0
-    );
-    cartCount.innerText = `(${totalQuantity})`; // Update the cart count dynamically
-  }
-}
-
-// Initial cart count update when the page loads
-updateCartCount();

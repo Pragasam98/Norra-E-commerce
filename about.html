@@ -3,11 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Products - Norra</title>
-    <link rel="stylesheet" href="products.css" />
+    <title>Norra E-commerce</title>
+    <link rel="stylesheet" href="about.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   </head>
   <body>
-    <!-- Header Section -->
+    <!-- Header with Navigation and Search Bar -->
     <header>
       <h1>Norra</h1>
       <div class="nav-search-container">
@@ -55,14 +61,113 @@
         </div>
       </div>
     </header>
-    <!-- Product List Section -->
-    <section class="product-list">
-      <div class="container">
-        <h1>Our Products</h1>
-        <div class="product-grid" id="product-grid">
-          <!-- Products will be dynamically generated here -->
+
+    <!-- Main Content -->
+    <main class="container">
+      <div><h1>About Us</h1></div>
+      <div class="swiper">
+        <!-- Wrapper for slides -->
+        <div class="swiper-wrapper">
+          <!-- Slide 1 -->
+          <div class="swiper-slide swiper-slide--one">
+            <div class="slide-content">
+              <h2>John Doe</h2>
+              <p>CEO</p>
+            </div>
+          </div>
+          <!-- Slide 2 -->
+          <div class="swiper-slide swiper-slide--two">
+            <div class="slide-content">
+              <h2>Jane Smith</h2>
+              <p>CTO</p>
+            </div>
+          </div>
+          <!-- Slide 3 -->
+          <div class="swiper-slide swiper-slide--three">
+            <div class="slide-content">
+              <h2>Emily Davis</h2>
+              <p>SEO</p>
+            </div>
+          </div>
+          <!-- Slide 4 -->
+          <div class="swiper-slide swiper-slide--four">
+            <div class="slide-content">
+              <h2>Michael Brown</h2>
+              <p>CRO</p>
+            </div>
+          </div>
+          <!-- Slide 5 -->
+          <div class="swiper-slide swiper-slide--five">
+            <div class="slide-content">
+              <h2>Sarah Wilson</h2>
+              <p>CMO</p>
+            </div>
+          </div>
         </div>
+
+        <!-- Pagination -->
+        <div class="swiper-pagination"></div>
       </div>
+      <!-- FAQ Accordion Section -->
+      <section class="faq">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-question">What is Norra?</button>
+          <div class="faq-answer">
+            <p>
+              Norra is a leading e-commerce platform offering a wide range of
+              products, from clothing to accessories and more.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            How can I contact customer support?
+          </button>
+          <div class="faq-answer">
+            <p>
+              You can reach our customer support team at support@norra.com or by
+              calling +1 234 567 890.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            What payment methods are accepted?
+          </button>
+          <div class="faq-answer">
+            <p>
+              We accept all major credit cards, PayPal, and other secure online
+              payment methods.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Can I return an item?</button>
+          <div class="faq-answer">
+            <p>
+              Yes, you can return items within 30 days of purchase. Please visit
+              our return policy page for more information.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Do you offer international shipping?
+          </button>
+          <div class="faq-answer">
+            <p>
+              Yes, we offer international shipping. Shipping costs may vary
+              depending on your location.
+            </p>
+          </div>
+        </div>
+      </section>
       <!-- Contact Us Modal -->
       <div id="contactModal" class="modal">
         <div class="modal-content">
@@ -170,9 +275,9 @@
           </form>
         </div>
       </div>
-    </section>
+    </main>
 
-    <!-- Footer Section -->
+    <!-- Footer -->
     <footer>
       <div class="footer-section logo-column">
         <h1 class="footer-logo">Norra</h1>
@@ -201,6 +306,7 @@
       </div>
     </footer>
 
-    <script src="products.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="about.js"></script>
   </body>
 </html>

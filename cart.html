@@ -23,99 +23,56 @@
           <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="products.html">Shop</a></li>
-            <li><a href="#">About</a></li>
+            <li><a href="about.html">About</a></li>
             <li>
-              <a id="contactUsButton" class="contact-us-btn"> Contact Us </a>
+              <a href="#" id="contactUsButton" class="contact-us-btn"
+                >Contact Us</a
+              >
             </li>
             <li>
               <a href="cart.html">Cart <span id="cart-count">(0)</span></a>
             </li>
           </ul>
+
+          <!-- Search Bar (Mobile Search Bar Appears Here) -->
+          <div class="search-bar mobile-search-bar">
+            <input
+              type="text"
+              id="mobile-search-input"
+              placeholder="Search for products..."
+            />
+            <button id="mobile-search-button">Search</button>
+          </div>
         </nav>
-        <!-- Search Bar -->
-        <div class="search-bar">
+
+        <!-- Search Bar for Desktop -->
+        <div class="search-bar desktop-search-bar">
           <input
             type="text"
-            id="search-input"
+            id="desktop-search-input"
             placeholder="Search for products..."
           />
-          <button id="search-button">Search</button>
+          <button id="desktop-search-button">Search</button>
         </div>
       </div>
     </header>
-    <!-- Cart Section (Initially Empty) -->
+
+    <!-- Cart Section -->
+
+    <!-- Cart Section -->
     <section class="cart">
       <div class="container">
         <h1>Your Cart</h1>
-
-        <!-- Cart Content (Grid Layout) -->
         <div class="cart-content">
-          <!-- Cart Items List (70%) -->
-          <div class="cart-items">
-            <!-- Example cart item -->
-            <div class="cart-item" data-id="1">
-              <!-- Image and Quantity Control Section -->
-              <div class="cart-item-left">
-                <div class="cart-item-image-container">
-                  <img
-                    src="images/product-images/dunk-low-midnight-navy-and-varsity-red-ib2051-1.jpg"
-                    alt="Dunk Low Midnight Navy and Varsity Red"
-                    class="cart-item-image"
-                  />
-                </div>
-                <div class="quantity-control">
-                  <button class="decrease-quantity" data-id="1">-</button>
-                  <span class="quantity" data-id="1">1</span>
-                  <button class="increase-quantity" data-id="1">+</button>
-                </div>
-                <button class="remove-from-cart" data-id="1">Remove</button>
-              </div>
-              <!-- Info Section -->
-              <div class="cart-item-info">
-                <h3>Dunk Low Midnight Navy and Varsity Red</h3>
-                <p>Price: $127.72</p>
-              </div>
-            </div>
-
-            <div class="cart-item" data-id="2">
-              <!-- Image and Quantity Control Section -->
-              <div class="cart-item-left">
-                <div class="cart-item-image-container">
-                  <img
-                    src="images/product-images/dunk-low-midnight-navy-and-varsity-red-ib2051-1.jpg"
-                    alt="Dunk Low Midnight Navy and Varsity Red"
-                    class="cart-item-image"
-                  />
-                </div>
-                <div class="quantity-control">
-                  <button class="decrease-quantity" data-id="2">-</button>
-                  <span class="quantity" data-id="2">1</span>
-                  <button class="increase-quantity" data-id="2">+</button>
-                </div>
-                <button class="remove-from-cart" data-id="2">Remove</button>
-              </div>
-              <!-- Info Section -->
-              <div class="cart-item-info">
-                <h3>Dunk Low Midnight Navy and Varsity Red</h3>
-                <p>Price: $127.72</p>
-                <p class="size-text">Size: ${item.size}</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Cart Summary Details (30%) -->
+          <div class="cart-items" id="cart-items-container"></div>
           <div class="cart-summary-details">
             <h2>Summary</h2>
-            <div id="cart-summary-items">
-              <!-- Summary content will be dynamically added here -->
-            </div>
-            <p>Product Amount: <span id="product-amount">$0.00</span></p>
-            <p>Discount Amount: <span id="discount-amount">$0.00</span></p>
-            <h3>
-              <strong
-                >Total Amount: <span id="total-amount">$0.00</span></strong
-              >
-            </h3>
+            <p>Product Amount: <span id="product-amount">₹0.00</span></p>
+            <p>Discount Amount: <span id="discount-amount">₹0.00</span></p>
+            <h3>Total Amount: <span id="total-amount">₹0.00</span></h3>
+            <a href="buynow.html" id="buy-now-btn" class="buy-now-btn"
+              >Buy Now</a
+            >
           </div>
         </div>
       </div>
@@ -227,7 +184,6 @@
         </div>
       </div>
     </section>
-
     <!-- Footer Section -->
     <footer>
       <div class="footer-section logo-column">

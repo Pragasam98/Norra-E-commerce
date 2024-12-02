@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Products - Norra</title>
-    <link rel="stylesheet" href="products.css" />
+    <title>Buy Now</title>
+    <link rel="stylesheet" href="buynow.css" />
   </head>
+
   <body>
-    <!-- Header Section -->
     <header>
       <h1>Norra</h1>
       <div class="nav-search-container">
@@ -55,13 +55,131 @@
         </div>
       </div>
     </header>
-    <!-- Product List Section -->
-    <section class="product-list">
-      <div class="container">
-        <h1>Our Products</h1>
-        <div class="product-grid" id="product-grid">
-          <!-- Products will be dynamically generated here -->
+
+    <!-- Main Content Container -->
+    <div class="container">
+      <!-- Left side: Address form -->
+      <div class="address-form">
+        <!-- Address form code goes here -->
+        <div class="section-heading">Home Address</div>
+        <div class="address-grid">
+          <div class="left-grid">
+            <label for="homeStreet">Street Address:</label>
+            <input
+              type="text"
+              id="homeStreet"
+              name="homeStreet"
+              placeholder="Enter your street address"
+              required
+            />
+            <div class="error-message" id="street-error"></div>
+            <!-- Error message -->
+
+            <label for="homeState">State:</label>
+            <input
+              type="text"
+              id="homeState"
+              name="homeState"
+              placeholder="Enter your state"
+              required
+            />
+            <div class="error-message" id="state-error"></div>
+            <!-- Error message -->
+          </div>
+          <div class="right-grid">
+            <label for="homeCity">City:</label>
+            <input
+              type="text"
+              id="homeCity"
+              name="homeCity"
+              placeholder="Enter your city"
+              required
+            />
+            <div class="error-message" id="city-error"></div>
+            <!-- Error message -->
+
+            <label for="homePincode">Pincode:</label>
+            <input
+              type="text"
+              id="homePincode"
+              name="homePincode"
+              placeholder="Enter your pincode"
+              required
+            />
+            <div class="error-message" id="pincode-error"></div>
+            <!-- Error message -->
+          </div>
         </div>
+
+        <div class="section-heading">Billing Address</div>
+        <div class="address-grid">
+          <div class="left-grid">
+            <label for="billingStreet">Street Address:</label>
+            <input
+              type="text"
+              id="billingStreet"
+              name="billingStreet"
+              placeholder="Enter your street address"
+              required
+            />
+            <div class="error-message" id="billing-street-error"></div>
+            <!-- Error message -->
+
+            <label for="billingState">State:</label>
+            <input
+              type="text"
+              id="billingState"
+              name="billingState"
+              placeholder="Enter your state"
+              required
+            />
+            <div class="error-message" id="billing-state-error"></div>
+            <!-- Error message -->
+          </div>
+          <div class="right-grid">
+            <label for="billingCity">City:</label>
+            <input
+              type="text"
+              id="billingCity"
+              name="billingCity"
+              placeholder="Enter your city"
+              required
+            />
+            <div class="error-message" id="billing-city-error"></div>
+            <!-- Error message -->
+
+            <label for="billingPincode">Pincode:</label>
+            <input
+              type="text"
+              id="billingPincode"
+              name="billingPincode"
+              placeholder="Enter your pincode"
+              required
+            />
+            <div class="error-message" id="billing-pincode-error"></div>
+            <!-- Error message -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side: Cart summary -->
+      <div class="cart-summary">
+        <h2>Order Summary</h2>
+        <div id="cart-items-list"></div>
+        <!-- Cart items will be dynamically inserted here -->
+        <div class="total-amount">
+          <p><strong>Cart Total:</strong> <span id="cart-total">₹0.00</span></p>
+          <p>
+            <strong>Shipping:</strong> <span id="shipping-amount">₹10.00</span>
+          </p>
+          <p>
+            <strong>Discount:</strong> <span id="discount-amount">₹50.00</span>
+          </p>
+          <p>
+            <strong>Total Price:</strong> <span id="final-amount">₹0.00</span>
+          </p>
+        </div>
+        <button class="buy-now-button" id="buy-now-button">Buy Now</button>
       </div>
       <!-- Contact Us Modal -->
       <div id="contactModal" class="modal">
@@ -170,9 +288,8 @@
           </form>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Footer Section -->
     <footer>
       <div class="footer-section logo-column">
         <h1 class="footer-logo">Norra</h1>
@@ -201,6 +318,6 @@
       </div>
     </footer>
 
-    <script src="products.js"></script>
+    <script src="buynow.js"></script>
   </body>
 </html>
