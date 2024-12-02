@@ -36,9 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     totalAmount.innerText = `₹${finalAmount.toFixed(2)}`;
 
     // Store the amounts in localStorage for payment page
-    localStorage.setItem("productAmount", total);
-    localStorage.setItem("discountAmount", discount);
-    localStorage.setItem("totalAmount", finalAmount);
+    localStorage.setItem("totalAmount", finalAmount); // Store total amount
 
     const addressData = JSON.parse(localStorage.getItem("addressData"));
     if (addressData) {

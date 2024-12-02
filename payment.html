@@ -3,15 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Razorpay Payment</title>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <title>Payment Page</title>
     <style>
       body {
         font-family: Arial, sans-serif;
         text-align: center;
         margin-top: 50px;
       }
-      #rzp-button {
+      #pay-now {
         padding: 10px 20px;
         font-size: 16px;
         color: #fff;
@@ -20,50 +19,79 @@
         border-radius: 5px;
         cursor: pointer;
       }
-      #rzp-button:hover {
+      #pay-now:hover {
         background-color: #2879a5;
       }
     </style>
   </head>
   <body>
-    <h1>Make a Payment</h1>
-    <button id="rzp-button">Pay Now</button>
+    <h1>Complete Your Payment</h1>
+    <p>Amount to Pay: ₹<span id="amount-summary">0.00</span></p>
+    <button id="pay-now">Pay Now</button>
+
+    <!-- Include Razorpay's checkout script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <script>
-      const options = {
-        key: "rzp_test_wXN4Trx0gv8vzT", // Replace with your Razorpay API Key
-        amount: 50000, // Amount in paise (₹500 = 50000 paise)
-        currency: "INR",
-        name: "Your Company Name",
-        description: "Test Transaction",
-        image: "https://your-logo-url.com/logo.png", // Optional: Your company logo
-        handler: function (response) {
-          alert(
-            "Payment Successful!\nPayment ID: " + response.razorpay_payment_id
-          );
-          console.log(response);
-        },
-        theme: {
-          color: "#3399cc",
-        },
-        prefill: {
-          name: "Customer Name",
-          email: "customer@example.com",
-          contact: "9876543210",
-        },
-        modal: {
-          ondismiss: function () {
-            alert("Payment Cancelled by User.");
+      document.addEventListener("DOMContentLoaded", function () {
+        // Retrieve the total amount from localStorage
+        const totalAmount = localStorage.getItem("totalAmount");
+
+        // Log the total amount to the console to ensure it's being fetched
+        console.log(
+          "Total amount retrieved from localStorage: ₹" + totalAmount
+        );
+
+        // If no totalAmount found, alert the user and redirect
+        if (!totalAmount) {
+          alert("Amount not found. Please check the checkout page.");
+          window.location.href = "checkout.html"; // Redirect back to checkout page if no amount
+          return;
+        }
+
+        // Display the amount in the payment summary
+        document.getElementById("amount-summary").innerText = `₹${parseFloat(
+          totalAmount
+        ).toFixed(2)}`;
+
+        // Razorpay checkout options
+        const options = {
+          key: "rzp_test_wXN4Trx0gv8vzT", // Your Razorpay Key ID
+          amount: totalAmount * 100, // Convert to paisa (₹500 = 50000 paisa)
+          currency: "INR", // Currency type
+          name: "Your Company Name", // Your company's name
+          description: "Order Summary", // Description for the payment
+          image: "https://your-logo-url.com/logo.png", // Your company's logo (optional)
+          handler: function (response) {
+            alert(
+              "Payment Successful! Payment ID: " + response.razorpay_payment_id
+            );
+            console.log(response);
+            window.location.href = "success.html"; // Redirect to success page
           },
-        },
-      };
+          prefill: {
+            name: "Customer Name", // Prefill customer name
+            email: "customer@example.com", // Prefill customer email
+            contact: "9876543210", // Prefill customer phone number
+          },
+          theme: {
+            color: "#3399cc", // Color theme for the Razorpay popup
+          },
+          modal: {
+            ondismiss: function () {
+              alert("Payment Cancelled.");
+            },
+          },
+        };
 
-      const rzp1 = new Razorpay(options);
-
-      document.getElementById("rzp-button").onclick = function (e) {
-        rzp1.open();
-        e.preventDefault();
-      };
+        // Add a click event listener to the "Pay Now" button
+        const payButton = document.getElementById("pay-now");
+        payButton.addEventListener("click", function (e) {
+          e.preventDefault(); // Prevent the default button action
+          const rzp1 = new Razorpay(options); // Create a new Razorpay instance with the options
+          rzp1.open(); // Open the Razorpay payment modal
+        });
+      });
     </script>
   </body>
 </html>
